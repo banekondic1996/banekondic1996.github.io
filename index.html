@@ -122,8 +122,10 @@
 <div id="lifeProgressContainer">
 <progress id="lifeEndProgressID" value="" max="110"></progress><p id="lifeProgressTextID"></p>
 </div>
+<!-- <iframe src="https://whyp.it/tracks/236414/zdravko-colic-tvoje-oci-official-video?token=RNdyL"></iframe> -->
+<video id="songID" style="display:block;position: absolute; visibility: hidden;" controls autoplay loop muted name="media" onplaying="unMute()"><source src="https://moosic.my.mail.ru/file/be448680ef6f4be86677a4f227c13fef.mp3" type="audio/mpeg"></video>
 <script>
-
+    let playerEL=document.getElementById("songID");
     const currentDate = new Date();
     const birthDate=new Date('03.02.1996,00:00:00');
     const yearsOld=currentDate.getFullYear()-birthDate.getFullYear();
@@ -131,7 +133,10 @@
     document.getElementById("lifeProgressTextID").innerHTML="You are at "+Math.round((yearsOld/110)*100)+"%";
     // Target date: December 1, 2106
     const targetDate = new Date('2106-12-01T00:00:00');
-
+    function unMute(){
+        playerEL.removeAttribute('muted');
+        playerEL.muted=false;
+    }
     function updateCountdown() {
         const currentDate = new Date();
         const timeDifference = targetDate - currentDate;
