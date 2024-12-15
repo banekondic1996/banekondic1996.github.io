@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maximum expected life and time remaining</title>
     <style>
+        @media (max-width: 840px) {
+            #lifeProgressContainer{
+            accent-color: crimson;
+            height: 30px;
+            width: 50%;
+            bottom: 20px;
+            position: relative!important;
+        }
+        }
         body {
             font-family: 'Arial', sans-serif;
             background-color: black;
@@ -41,6 +50,7 @@
             font-weight: bold;
             margin-bottom: 20px;
             color: #e81a1a;
+            margin:10px;
         }
 
         .countdown span {
@@ -66,6 +76,20 @@
             font-size: 0.9em;
             color: #777;
             margin-top: 20px;
+        }
+        #lifeEndProgressID{
+            accent-color: crimson;
+            height: 30px;
+ /*            position: absolute;
+            bottom: 20px; */
+        }
+        #lifeProgressContainer{
+            color:white;
+            position: absolute;
+            bottom: 10px;
+            display: flex;
+            place-items: center;
+            gap: 10px;
         }
     </style>
 </head>
@@ -95,8 +119,16 @@
     </div>
     <p class="note">Countdown Timer (from march 2015)</p>
 </div>
-
+<div id="lifeProgressContainer">
+<progress id="lifeEndProgressID" value="" max="110"></progress><p id="lifeProgressTextID"></p>
+</div>
 <script>
+
+    const currentDate = new Date();
+    const birthDate=new Date('03.02.1996,00:00:00');
+    const yearsOld=currentDate.getFullYear()-birthDate.getFullYear();
+    let lifeProgressVal=document.getElementById("lifeEndProgressID").value=yearsOld;
+    document.getElementById("lifeProgressTextID").innerHTML="You are at "+Math.round((yearsOld/110)*100)+"%";
     // Target date: December 1, 2106
     const targetDate = new Date('2106-12-01T00:00:00');
 
