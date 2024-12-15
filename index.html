@@ -3,14 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Maximum expected life and time remaining</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            display: flex;
+            margin: auto;
+            flex-wrap: wrap;
+        }
+
+        .container {
+            background-color: #e2e2e2;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+            margin:20px;
+            height: 80%;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .countdown {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #e81a1a;
+        }
+
+        .countdown span {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown span span {
+            font-size: 1.2em;
+            font-weight: normal;
+        }
+
+        .note {
+            font-size: 1.1em;
+            color: #888;
+        }
+
+        .footer {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-<style>
-    *{
-        background: black;
-    }
-</style>
 <body>
-    <p style="color:white">Bane</p>
+
+<div class="container">
+    <h1>Maximum expected life, time remaining</h1>
+    <div class="countdown" id="countdownMe">
+        <span id="years">0</span><span>years</span><br>
+        <span id="months">0</span><span>months</span><br>
+        <span id="days">0</span><span>days</span><br>
+        <span id="hours">0</span><span>hours</span><br>
+        <span id="minutes">0</span><span>minutes</span><br>
+        <span id="seconds">0</span><span>seconds</span><br>
+    </div>
+    <p class="note">Countdown Timer (to 110 years old)</p>
+</div>
+<div class="container">
+    <h1>Time counting each second, while someone else is with my future wife</h1>
+    <div class="countdown" id="countdownWife">
+        <span id="yearsWifeID">0</span><span>years</span><br>
+        <span id="monthsWifeID">0</span><span>months</span><br>
+        <span id="daysWifeID">0</span><span>days</span><br>
+        <span id="hoursWifeID">0</span><span>hours</span><br>
+        <span id="minutesWifeID">0</span><span>minutes</span><br>
+        <span id="secondsWifeID">0</span><span>seconds</span><br>
+    </div>
+    <p class="note">Countdown Timer (from march 2015)</p>
+</div>
+
+<script>
+    // Target date: December 1, 2106
+    const targetDate = new Date('2106-12-01T00:00:00');
+
+    function updateCountdown() {
+        const currentDate = new Date();
+        const timeDifference = targetDate - currentDate;
+
+        // If the target date has passed, stop the timer
+        if (timeDifference <= 0) {
+            document.getElementById('countdown').innerHTML = "<span>The target date has passed!</span>";
+            return;
+        }
+
+        // Calculate years, months, days, hours, minutes, and seconds
+        const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+        const months = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+        const days = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        // Update the HTML elements with the new values
+        document.getElementById('years').textContent = years;
+        document.getElementById('months').textContent = months;
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('minutes').textContent = minutes;
+        document.getElementById('seconds').textContent = seconds;
+    }
+
+    // Update the countdown every second
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Initial call to populate the countdown immediately
+    const startDate = new Date('2015-03-26T00:00:00');
+
+function updateElapsedTime() {
+    const currentDate = new Date();
+    const timeDifference = currentDate - startDate;
+
+    // Calculate years, months, days, hours, minutes, and seconds
+    const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+    const months = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    // Update the HTML elements with the new values
+    document.getElementById('yearsWifeID').textContent = years;
+    document.getElementById('monthsWifeID').textContent = months;
+    document.getElementById('daysWifeID').textContent = days;
+    document.getElementById('hoursWifeID').textContent = hours;
+    document.getElementById('minutesWifeID').textContent = minutes;
+    document.getElementById('secondsWifeID').textContent = seconds;
+}
+
+// Update the elapsed time every second
+setInterval(updateElapsedTime, 1000);
+updateElapsedTime(); // Initial call to populate the elapsed time immediately
+</script>
+</script>
+
 </body>
 </html>
