@@ -3,201 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maximum expected life and time remaining</title>
-    <style>
-        @media (max-width: 840px) {
-            #lifeProgressContainer{
-            accent-color: crimson;
-            height: 30px;
-            width: 50%;
-            bottom: 20px;
-            position: relative!important;
-        }
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
-            display: flex;
-            margin: auto;
-            flex-wrap: wrap;
-        }
-
-        .container {
-            background-color: #e2e2e2;
-            padding: 20px 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 100%;
-            max-width: 350px;
-            margin: 20px;
-            height: 80%;
-            min-height: 630px;
-        }
-
-        h1 {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 20px;
-            height: 150px;
-            align-content: center;
-        }
-
-        .countdown {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #e81a1a;
-            margin:10px;
-        }
-
-        .countdown span {
-            display: inline-block;
-            margin: 5px;
-            padding: 10px 20px;
-            background-color: #f1f1f1;
-            border-radius: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .countdown span span {
-            font-size: 1.2em;
-            font-weight: normal;
-        }
-
-        .note {
-            font-size: 1.1em;
-            color: #888;
-        }
-
-        .footer {
-            font-size: 0.9em;
-            color: #777;
-            margin-top: 20px;
-        }
-        #lifeEndProgressID{
-            accent-color: crimson;
-            height: 30px;
- /*            position: absolute;
-            bottom: 20px; */
-        }
-        #lifeProgressContainer{
-            color:white;
-            position: absolute;
-            bottom: 10px;
-            display: flex;
-            place-items: center;
-            gap: 10px;
-        }
-    </style>
+    <title>Misthist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Blog</a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <div id="navMenu" class="nav-menu"></div>
+            <input type="text" id="searchInput" placeholder="Search..." class="search-input">
+        </div>
+    </nav>
 
-<div class="container">
-    <h1>Maximum expected life, time remaining</h1>
-    <div class="countdown" id="countdownMe">
-        <span id="years">0</span><span>years</span><br>
-        <span id="months">0</span><span>months</span><br>
-        <span id="days">0</span><span>days</span><br>
-        <span id="hours">0</span><span>hours</span><br>
-        <span id="minutes">0</span><span>minutes</span><br>
-        <span id="seconds">0</span><span>seconds</span><br>
+    <div class="main-wrapper">
+        <main class="main-content">
+            <!-- Home View -->
+            <div id="homeView">
+                <div id="postsContainer" class="posts-grid"></div>
+                <div id="noResults" class="no-results" style="display: none;">
+                    <p>No posts found.</p>
+                </div>
+            </div>
+
+            <!-- Post View -->
+            <div id="postView" style="display: none;">
+                <article class="post-full">
+                    <div class="post-header">
+                        <a href="#" class="back-link">← Back</a>
+                        <div id="postCategories" class="post-categories"></div>
+                        <h1 id="postTitle"></h1>
+                        <div class="post-meta">
+                            <span id="postDate"></span>
+                            <span id="postAuthor"></span>
+                        </div>
+                        <button id="shareBtn" class="share-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                            Share
+                        </button>
+                    </div>
+                    <div id="postContent" class="post-content"></div>
+                    <div id="encryptedNotice" class="encrypted-notice" style="display: none;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <h3>This content is encrypted</h3>
+                        <p>This post requires a password to view</p>
+                        <button id="unlockBtn" class="btn-primary">Unlock Content</button>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Page View -->
+            <div id="pageView" style="display: none;">
+                <article class="page-full">
+                    <h1 id="pageTitle"></h1>
+                    <div id="pageContent" class="page-content"></div>
+                </article>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Categories</h3>
+                <div id="categoriesList" class="categories-list"></div>
+            </div>
+        </aside>
     </div>
-    <p class="note">Countdown Timer (to 110 years old)</p>
-</div>
-<div class="container">
-    <h1>Time counting each second, while someone else is with my future wife</h1>
-    <div class="countdown" id="countdownWife">
-        <span id="yearsWifeID">0</span><span>years</span><br>
-        <span id="monthsWifeID">0</span><span>months</span><br>
-        <span id="daysWifeID">0</span><span>days</span><br>
-        <span id="hoursWifeID">0</span><span>hours</span><br>
-        <span id="minutesWifeID">0</span><span>minutes</span><br>
-        <span id="secondsWifeID">0</span><span>seconds</span><br>
+
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <h3>Share this post</h3>
+            <div class="share-link-container">
+                <input type="text" id="shareLink" readonly class="share-link-input">
+                <button id="copyLinkBtn" class="btn-primary">Copy</button>
+            </div>
+            <p id="copyMessage" class="copy-message"></p>
+            <button id="closeShareModal" class="btn-secondary">Close</button>
+        </div>
     </div>
-    <p class="note">Countdown Timer (from march 2015)</p>
-</div>
-<div id="lifeProgressContainer">
-<progress id="lifeEndProgressID" value="" max="110"></progress><p id="lifeProgressTextID"></p>
-</div>
-<!-- <iframe src="https://whyp.it/tracks/236414/zdravko-colic-tvoje-oci-official-video?token=RNdyL"></iframe> -->
-<video id="songID" style="display:block;position: absolute; visibility: hidden;" controls autoplay loop muted name="media" onplaying="unMute()"><source src="https://moosic.my.mail.ru/file/be448680ef6f4be86677a4f227c13fef.mp3" type="audio/mpeg"></video>
-<script>
-    let playerEL=document.getElementById("songID");
-    const currentDate = new Date();
-    const birthDate=new Date('03.02.1996,00:00:00');
-    const yearsOld=currentDate.getFullYear()-birthDate.getFullYear();
-    let lifeProgressVal=document.getElementById("lifeEndProgressID").value=yearsOld;
-    document.getElementById("lifeProgressTextID").innerHTML="You are at "+Math.round((yearsOld/110)*100)+"%";
-    // Target date: December 1, 2106
-    const targetDate = new Date('2106-12-01T00:00:00');
-    function unMute(){
-        playerEL.removeAttribute('muted');
-        playerEL.muted=false;
-    }
-    function updateCountdown() {
-        const currentDate = new Date();
-        const timeDifference = targetDate - currentDate;
 
-        // If the target date has passed, stop the timer
-        if (timeDifference <= 0) {
-            document.getElementById('countdown').innerHTML = "<span>The target date has passed!</span>";
-            return;
-        }
+    <div id="decryptModal" class="modal">
+        <div class="modal-content">
+            <h3>Enter Password</h3>
+            <p>This content is protected. Enter the password to view:</p>
+            <input type="password" id="decryptPassword" placeholder="Password" class="decrypt-input">
+            <div class="modal-buttons">
+                <button id="decryptBtn" class="btn-primary">Decrypt</button>
+                <button id="cancelDecryptBtn" class="btn-secondary">Cancel</button>
+            </div>
+            <p id="decryptError" class="error-message"></p>
+        </div>
+    </div>
 
-        // Calculate years, months, days, hours, minutes, and seconds
-        const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
-        const months = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-        const days = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-        // Update the HTML elements with the new values
-        document.getElementById('years').textContent = years;
-        document.getElementById('months').textContent = months;
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-        document.getElementById('seconds').textContent = seconds;
-    }
-
-    // Update the countdown every second
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Initial call to populate the countdown immediately
-    const startDate = new Date('2015-03-26T00:00:00');
-
-function updateElapsedTime() {
-    const currentDate = new Date();
-    const timeDifference = currentDate - startDate;
-
-    // Calculate years, months, days, hours, minutes, and seconds
-    const years = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
-    const months = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-    const days = Math.floor((timeDifference % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-    // Update the HTML elements with the new values
-    document.getElementById('yearsWifeID').textContent = years;
-    document.getElementById('monthsWifeID').textContent = months;
-    document.getElementById('daysWifeID').textContent = days;
-    document.getElementById('hoursWifeID').textContent = hours;
-    document.getElementById('minutesWifeID').textContent = minutes;
-    document.getElementById('secondsWifeID').textContent = seconds;
-}
-
-// Update the elapsed time every second
-setInterval(updateElapsedTime, 1000);
-updateElapsedTime(); // Initial call to populate the elapsed time immediately
-</script>
-</script>
-
+    <script src="js/crypto.js"></script>
+    <script src="data/posts.js"></script>
+    <script src="data/pages.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
