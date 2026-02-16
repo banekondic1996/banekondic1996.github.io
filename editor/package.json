@@ -1,0 +1,23 @@
+{
+  "name": "blog-editor",
+  "version": "1.0.0",
+  "description": "WYSIWYG Blog Editor with Encryption",
+  "main": "index.html",
+  "window": {
+    "title": "Blog Editor",
+    "width": 1200,
+    "height": 800,
+    "min_width": 1000,
+    "min_height": 600,
+    "icon": "icon.png"
+  },
+  "chromium-args": "--mixed-context",
+  "dependencies": {
+    "localStorage": "^1.0.4",
+    "nw": "^0.107.0"
+  },
+  "scripts": {
+    "starte": "nw .",
+    "startb": "nw ../blog"
+  }
+}

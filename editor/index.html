@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+    <div class="editor-layout">
+        <!-- Collapsible Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Posts & Pages</h2>
+                <button id="closeSidebarBtn" class="sidebar-toggle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="sidebar-tabs">
+                <button class="tab-btn active" data-tab="posts">Posts</button>
+                <button class="tab-btn" data-tab="pages">Pages</button>
+            </div>
+
+            <div class="sidebar-actions">
+                <button id="newPostBtn" class="btn-primary">+ New Post</button>
+                <button id="newPageBtn" class="btn-secondary">+ New Page</button>
+            </div>
+
+            <div id="postsTab" class="tab-content active">
+                <div id="postsList" class="items-list"></div>
+            </div>
+
+            <div id="pagesTab" class="tab-content">
+                <div id="pagesList" class="items-list"></div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="settingsBtn" class="btn-secondary">⚙ Settings</button>
+                <button id="exportBtn" class="btn-primary">Export Blog</button>
+            </div>
+        </aside>
+
+        <!-- Toggle Button (when sidebar is closed) -->
+        <button id="openSidebarBtn" class="sidebar-toggle open-btn" style="display: none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6"></path>
+            </svg>
+        </button>
+
+        <!-- Main Editor -->
+        <main class="editor-main">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <h1>Welcome to Blog Editor</h1>
+                <p>Create and manage your blog posts and pages</p>
+                <div class="welcome-actions">
+                    <button id="welcomeNewPostBtn" class="btn-primary">Create First Post</button>
+                    <button id="welcomeNewPageBtn" class="btn-secondary">Create First Page</button>
+                </div>
+            </div>
+
+            <!-- Editor Screen -->
+            <div id="editorScreen" class="editor-screen" style="display: none;">
+                <div class="editor-toolbar">
+                    <div class="toolbar-group">
+                        <button type="button" data-command="bold" class="toolbar-btn" title="Bold"><b>B</b></button>
+                        <button type="button" data-command="italic" class="toolbar-btn" title="Italic"><i>I</i></button>
+                        <button type="button" data-command="underline" class="toolbar-btn" title="Underline"><u>U</u></button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button type="button" data-command="formatBlock" data-value="h2" class="toolbar-btn">H2</button>
+                        <button type="button" data-command="formatBlock" data-value="h3" class="toolbar-btn">H3</button>
+                        <button type="button" data-command="formatBlock" data-value="p" class="toolbar-btn">P</button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button type="button" data-command="insertUnorderedList" class="toolbar-btn">• List</button>
+                        <button type="button" data-command="insertOrderedList" class="toolbar-btn">1. List</button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button type="button" data-command="createLink" class="toolbar-btn">Link</button>
+                        <button type="button" id="insertImageBtn" class="toolbar-btn">Image</button>
+                    </div>
+                    <div class="toolbar-group">
+                        <button type="button" id="previewBtn" class="toolbar-btn">👁 Preview</button>
+                        <button type="button" id="previewBlogBtn" class="toolbar-btn">🌐 Preview Blog</button>
+                        <button type="button" id="viewHtmlBtn" class="toolbar-btn">&lt;/&gt; HTML</button>
+                    </div>
+                    <div class="toolbar-actions">
+                        <button id="deleteBtn" class="btn-danger">Delete</button>
+                        <button id="saveBtn" class="btn-primary">Save</button>
+                    </div>
+                </div>
+
+                <div class="editor-container">
+                    <input type="text" id="contentTitle" placeholder="Enter title..." class="title-input">
+                    <div id="visualEditor" class="visual-editor" contenteditable="true"></div>
+                    <textarea id="htmlEditor" class="html-editor" style="display: none;"></textarea>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Save Modal -->
+    <div id="saveModal" class="modal">
+        <div class="modal-content">
+            <h2 id="saveModalTitle">Save Post</h2>
+            <div class="modal-form">
+                <div class="form-row">
+                    <label>Slug (URL):</label>
+                    <input type="text" id="slugInput" class="form-input" placeholder="post-slug">
+                </div>
+                <div id="postFields">
+                    <div class="form-row">
+                        <label>Author:</label>
+                        <input type="text" id="authorInput" class="form-input" placeholder="Author name">
+                    </div>
+                    <div class="form-row">
+                        <label>Date:</label>
+                        <input type="date" id="dateInput" class="form-input">
+                    </div>
+                    <div class="form-row">
+                        <label>Categories (comma-separated):</label>
+                        <input type="text" id="categoriesInput" class="form-input" placeholder="Technology, Web Development">
+                    </div>
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="encryptCheckbox">
+                            <span>Encrypt this post (password required to view)</span>
+                        </label>
+                    </div>
+                    <div id="encryptPasswordField" class="form-row" style="display: none;">
+                        <label>Encryption Password:</label>
+                        <input type="password" id="encryptPasswordInput" class="form-input" placeholder="Enter strong password">
+                    </div>
+                </div>
+                <div id="navFields" style="display: none;">
+                    <div class="form-row">
+                        <label>Show in Navigation:</label>
+                        <select id="navSelect" class="form-input">
+                            <option value="">Don't add to navigation</option>
+                            <option value="main">Add to main navigation</option>
+                        </select>
+                    </div>
+                    <div id="submenuField" style="display: none;">
+                        <label>As submenu under:</label>
+                        <select id="parentNavSelect" class="form-input"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="confirmSaveBtn" class="btn-primary">Save</button>
+                <button id="cancelSaveBtn" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <div class="modal-form">
+                <div class="form-row">
+                    <label>Blog Directory:</label>
+                    <div class="dir-input-group">
+                        <input type="text" id="blogDirectory" class="form-input" readonly>
+                        <button id="chooseDirBtn" class="btn-secondary">Choose</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="saveSettingsBtn" class="btn-primary">Save</button>
+                <button id="closeSettingsBtn" class="btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal preview-modal">
+        <div class="modal-content">
+            <div class="preview-header">
+                <h2>Preview</h2>
+                <button id="closePreviewBtn" class="btn-close">×</button>
+            </div>
+            <div id="previewContainer" class="preview-container"></div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="js/crypto.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/content-manager.js"></script>
+    <script src="js/wysiwyg.js"></script>
+    <script src="js/editor-app.js"></script>
+</body>
+</html>
