@@ -11,7 +11,7 @@ const BLOG_POSTS = {
         "Computers",
         "Programming"
       ],
-      "excerpt": "I'm so glad more people are switching to Linux. As person who never liked it and considered Linux as time wasting,Microslop pushed me so much that i h...",
+      "excerpt": "",
       "content": "",
       "encrypted": true,
       "encryptedContent": {
