@@ -1,0 +1,3 @@
+POST_CONTENT = {
+  "content": "<div style=\"word-break: break-word;\"><br></div>Made by me:<div style=\"word-break: break-word;\"><img\n    src=\"https://img-9gag-fun.9cache.com/photo/aQzNEN8_460swp.webp\" alt=\"Image\"\n    style=\"font-size: 1.0625rem;\">\n  <div style=\"word-break: break-word;\">\n    <div style=\"word-break: break-word;\"><img src=\"https://img-9gag-fun.9cache.com/photo/aD2NYOd_460swp.webp\"\n        alt=\"Image\" style=\"max-width: 100%;\"><br></div>\n  </div>\n</div>\n<div style=\"word-break: break-word;\"><img src=\"https://img-9gag-fun.9cache.com/photo/aAyOwG0_460swp.webp\"\n    alt=\"Image\" style=\"max-width: 100%;\"><br></div>\n<div style=\"word-break: break-word;\"><br></div>"
+};
