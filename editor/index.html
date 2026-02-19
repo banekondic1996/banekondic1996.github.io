@@ -96,6 +96,7 @@
                         <button type="button" id="insertImageBtn" class="toolbar-btn">Image</button>
                         <button type="button" id="insertImageUrlBtn" class="toolbar-btn">Image URL</button>
                         <button type="button" id="insertPreBtn" class="toolbar-btn">&lt;pre&gt;</button>
+                        <button type="button" id="insertEmbedBtn" class="toolbar-btn">Embed</button>
                     </div>
                     <div class="toolbar-group">
                         <button type="button" id="previewBtn" class="toolbar-btn">👁 Preview</button>
@@ -138,6 +139,11 @@
                     <div class="form-row">
                         <label>Categories (comma-separated):</label>
                         <input type="text" id="categoriesInput" class="form-input" placeholder="Technology, Web Development">
+                    </div>
+                    <div class="form-row">
+                        <label>Thumbnail URL:</label>
+                        <input type="text" id="thumbnailInput" class="form-input" placeholder="images/thumbnail.jpg or https://...">
+                        <small style="color: var(--text-light); font-size: 0.875rem;">Optional - Image for post cards</small>
                     </div>
                     <div class="form-row">
                         <label class="checkbox-label">
@@ -222,6 +228,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.11/beautify-html.min.js"></script>
     <script src="js/crypto.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/content-manager.js"></script>

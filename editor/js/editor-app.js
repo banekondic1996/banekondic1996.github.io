@@ -266,6 +266,7 @@ class EditorApp {
             
             document.getElementById('dateInput').value = currentItem.date || new Date().toISOString().split('T')[0];
             document.getElementById('categoriesInput').value = currentItem.categories ? currentItem.categories.join(', ') : '';
+            document.getElementById('thumbnailInput').value = currentItem.thumbnail || '';
             document.getElementById('encryptCheckbox').checked = currentItem.encrypted || false;
             document.getElementById('encryptPasswordField').style.display = currentItem.encrypted ? 'block' : 'none';
         }
@@ -307,6 +308,9 @@ class EditorApp {
             
             const categoriesInput = document.getElementById('categoriesInput').value.trim();
             itemData.categories = categoriesInput ? categoriesInput.split(',').map(c => c.trim()) : [];
+            
+            const thumbnail = document.getElementById('thumbnailInput').value.trim();
+            itemData.thumbnail = thumbnail || '';
 
             const shouldEncrypt = document.getElementById('encryptCheckbox').checked;
             

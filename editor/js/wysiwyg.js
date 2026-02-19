@@ -31,7 +31,6 @@ class WysiwygEditor {
                 indentUnit: 2,
                 tabSize: 2
             });
-            this.codeMirror.setSize(null, '100%');
         }
     }
 
@@ -53,7 +52,6 @@ class WysiwygEditor {
                 }
                 
                 this.visualEditor.focus();
-                this.codeEditor.style.display="none";
             });
         });
 
@@ -78,6 +76,14 @@ class WysiwygEditor {
             insertPreBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.insertPre();
+            });
+        }
+
+        const insertEmbedBtn = document.getElementById('insertEmbedBtn');
+        if (insertEmbedBtn) {
+            insertEmbedBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.insertEmbed();
             });
         }
 
@@ -159,13 +165,32 @@ class WysiwygEditor {
         }
     }
 
+    insertEmbed() {
+        const embedCode = prompt('Enter embed code (iframe, video, etc.):');
+        if (!embedCode) return;
+
+        const div = document.createElement('div');
+        div.className = 'embed-container';
+        div.innerHTML = embedCode;
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            range.insertNode(div);
+            range.collapse(false);
+        } else {
+            this.visualEditor.appendChild(div);
+        }
+    }
+
     toggleMode() {
         if (this.mode === 'visual') {
-            // Switch to HTML mode
+            // Switch to HTML mode and format
             if (this.codeMirror) {
-                this.codeMirror.setValue(this.visualEditor.innerHTML);
+                const html = this.formatHtml(this.visualEditor.innerHTML);
+                this.codeMirror.setValue(html);
                 this.visualEditor.style.display = 'none';
-                this.codeMirror.getWrapperElement().style.display = 'block';
+                this.codeMirror.getWrapperElement().classList.add('active');
                 this.codeMirror.refresh();
                 this.mode = 'html';
             }
@@ -173,28 +198,47 @@ class WysiwygEditor {
             // Switch to visual mode
             if (this.codeMirror) {
                 this.visualEditor.innerHTML = this.codeMirror.getValue();
-                this.codeMirror.getWrapperElement().style.display = 'none';
+                this.codeMirror.getWrapperElement().classList.remove('active');
                 this.visualEditor.style.display = 'block';
                 this.mode = 'visual';
             }
         }
     }
 
+    formatHtml(html) {
+        // Use js-beautify to format HTML
+        if (window.html_beautify) {
+            return html_beautify(html, {
+                indent_size: 2,
+                wrap_line_length: 80,
+                preserve_newlines: true,
+                max_preserve_newlines: 2,
+                indent_inner_html: true
+            });
+        }
+        return html;
+    }
+
     getContent() {
+        let content;
+        
         if (this.mode === 'html' && this.codeMirror) {
-            return this.cleanContent(this.codeMirror.getValue());
+            content = this.codeMirror.getValue();
+        } else {
+            content = this.visualEditor.innerHTML;
+            
+            // Convert file:// paths back to relative paths
+            const images = this.visualEditor.querySelectorAll('img[data-blog-path]');
+            images.forEach(img => {
+                const blogPath = img.dataset.blogPath;
+                if (blogPath) {
+                    content = content.replace(img.src, blogPath);
+                }
+            });
         }
         
-        let content = this.visualEditor.innerHTML;
-        
-        // Convert file:// paths back to relative paths
-        const images = this.visualEditor.querySelectorAll('img[data-blog-path]');
-        images.forEach(img => {
-            const blogPath = img.dataset.blogPath;
-            if (blogPath) {
-                content = content.replace(img.src, blogPath);
-            }
-        });
+        // Format HTML before saving
+        content = this.formatHtml(content);
         
         return this.cleanContent(content);
     }

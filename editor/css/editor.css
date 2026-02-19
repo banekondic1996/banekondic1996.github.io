@@ -391,10 +391,21 @@ body {
 }
 
 .CodeMirror {
-    height: 100% !important;
+    display: none;
+    flex: 1;
+    min-height: 400px;
     font-size: 14px;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
+}
+
+.CodeMirror.active {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.CodeMirror-scroll {
+    min-height: 400px;
 }
 
 /* Buttons */
@@ -613,7 +624,4 @@ body {
 
 .notification.error {
     border-left: 4px solid var(--danger-color);
-}
-.CodeMirror{
-    display: none;
 }

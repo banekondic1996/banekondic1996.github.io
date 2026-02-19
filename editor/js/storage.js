@@ -121,6 +121,7 @@ class StorageManager {
                 date: post.date,
                 categories: post.categories,
                 excerpt: post.excerpt,
+                thumbnail: post.thumbnail || '',
                 encrypted: post.encrypted
             }));
 
