@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bane Kondic - Blog">
     <meta name="google-site-verification" content="YFPnY3RELLXBumKlxJ64gO6ssBIAtq0IrgwQw-3lnK0" />
     <title>Blog - Branislav (Bane) Kondic</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +16,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">Blog</a>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Navigation Menu">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -48,7 +49,7 @@
                             <span id="postDate"></span>
                             <span id="postAuthor"></span>
                         </div>
-                        <button id="shareBtn" class="share-btn">
+                        <button id="shareBtn" class="share-btn" aria-label="Share button">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="18" cy="5" r="3"></circle>
                                 <circle cx="6" cy="12" r="3"></circle>
@@ -67,7 +68,7 @@
                         </svg>
                         <h3>This content is encrypted</h3>
                         <p>This post requires a password to view</p>
-                        <button id="unlockBtn" class="btn-primary">Unlock Content</button>
+                        <button id="unlockBtn" class="btn-primary" aria-label="Unlock content button">Unlock Content</button>
                     </div>
                 </article>
             </div>
@@ -94,10 +95,10 @@
             <h3>Share this post</h3>
             <div class="share-link-container">
                 <input type="text" id="shareLink" readonly class="share-link-input">
-                <button id="copyLinkBtn" class="btn-primary">Copy</button>
+                <button id="copyLinkBtn" class="btn-primary" aria-label="Copy link button">Copy</button>
             </div>
             <p id="copyMessage" class="copy-message"></p>
-            <button id="closeShareModal" class="btn-secondary">Close</button>
+            <button id="closeShareModal" class="btn-secondary" aria-label="Close modal button">Close</button>
         </div>
     </div>
 
@@ -107,8 +108,8 @@
             <p>This content is protected. Enter the password to view:</p>
             <input type="password" id="decryptPassword" placeholder="Password" class="decrypt-input">
             <div class="modal-buttons">
-                <button id="decryptBtn" class="btn-primary">Decrypt</button>
-                <button id="cancelDecryptBtn" class="btn-secondary">Cancel</button>
+                <button id="decryptBtn" class="btn-primary" aria-label="Decrypt button">Decrypt</button>
+                <button id="cancelDecryptBtn" class="btn-secondary" aria-label="Cancel button">Cancel</button>
             </div>
             <p id="decryptError" class="error-message"></p>
         </div>
