@@ -2,17 +2,6 @@
 const BLOG_POSTS = {
   "posts": [
     {
-      "id": "1771533520596",
-      "slug": "future-of-pc-s-an",
-      "title": "Future of PC's an",
-      "author": "",
-      "date": "2026-02-19",
-      "categories": [],
-      "excerpt": "zxcvzxcv",
-      "thumbnail": "https://numberdyslexia.com/wp-content/uploads/2022/09/1-16.jpg",
-      "encrypted": false
-    },
-    {
       "id": "1771416753021",
       "slug": "secret-post-password-is-jmbg-of-my-crush",
       "title": "Secret post (password is JMBG of my crush)",
