@@ -171,9 +171,51 @@ body {
 .sidebar-footer {
     padding: 1rem;
     border-top: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+}
+
+.menu-button-container {
+    position: relative;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.menu-dropdown.active {
+    display: block;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    font-family: 'Hind', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+    color: var(--text-color);
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item:hover {
+    background: var(--bg-color);
 }
 
 /* Main Editor */
@@ -344,15 +386,15 @@ body {
     margin: 1rem 0;
 }
 
-.html-editor {
-    font-family: 'Courier New', monospace;
-    font-size: 0.875rem;
-    background: #1e1e1e;
-    color: #d4d4d4;
-    padding: 1rem;
+.code-editor {
+    display: none;
+}
+
+.CodeMirror {
+    height: 100% !important;
+    font-size: 14px;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
-    resize: none;
 }
 
 /* Buttons */
@@ -571,4 +613,7 @@ body {
 
 .notification.error {
     border-left: 4px solid var(--danger-color);
+}
+.CodeMirror{
+    display: none;
 }

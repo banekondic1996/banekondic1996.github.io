@@ -2,7 +2,7 @@
 class EditorApp {
     constructor() {
         this.init();
-        this.author="";
+        this.author = "";
     }
 
     init() {
@@ -23,6 +23,29 @@ class EditorApp {
         // Sidebar toggle
         document.getElementById('closeSidebarBtn').addEventListener('click', () => this.toggleSidebar());
         document.getElementById('openSidebarBtn').addEventListener('click', () => this.toggleSidebar());
+
+        // Menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const menuDropdown = document.getElementById('menuDropdown');
+        
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.menu-button-container')) {
+                menuDropdown.classList.remove('active');
+            }
+        });
+
+        // Close menu after clicking menu item
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', () => {
+                menuDropdown.classList.remove('active');
+            });
+        });
 
         // Tabs
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -49,6 +72,10 @@ class EditorApp {
 
         // Export
         document.getElementById('exportBtn').addEventListener('click', () => this.exportBlog());
+
+        // RSS and Sitemap
+        document.getElementById('generateRssBtn').addEventListener('click', () => this.generateRss());
+        document.getElementById('generateSitemapBtn').addEventListener('click', () => this.generateSitemap());
 
         // Save modal
         document.getElementById('confirmSaveBtn').addEventListener('click', () => this.saveCurrentItem());
@@ -212,7 +239,6 @@ class EditorApp {
     }
 
     showSaveModal() {
-        const localStorage = require('localStorage');
         const currentItem = contentManager.getCurrentItem();
         const currentType = contentManager.getCurrentType();
         
@@ -235,7 +261,7 @@ class EditorApp {
 
         if (currentType === 'post') {
             // Autofill author from last used or current item
-            const lastAuthor =  this.author || '';
+            const lastAuthor = this.author || '';
             document.getElementById('authorInput').value = currentItem.author || lastAuthor;
             
             document.getElementById('dateInput').value = currentItem.date || new Date().toISOString().split('T')[0];
@@ -275,6 +301,7 @@ class EditorApp {
 
         if (currentType === 'post') {
             this.author = document.getElementById('authorInput').value.trim();
+            itemData.author = this.author;
             
             itemData.date = document.getElementById('dateInput').value;
             
@@ -401,6 +428,9 @@ class EditorApp {
     showSettings() {
         const settings = storageManager.getSettings();
         document.getElementById('blogDirectory').value = settings.blogDirectory || '';
+        document.getElementById('siteUrl').value = settings.siteUrl || '';
+        document.getElementById('siteTitle').value = settings.siteTitle || 'My Blog';
+        document.getElementById('siteDescription').value = settings.siteDescription || '';
         document.getElementById('settingsModal').classList.add('active');
     }
 
@@ -410,7 +440,16 @@ class EditorApp {
 
     saveSettings() {
         const blogDirectory = document.getElementById('blogDirectory').value;
-        const saved = storageManager.saveSettings({ blogDirectory });
+        const siteUrl = document.getElementById('siteUrl').value.trim();
+        const siteTitle = document.getElementById('siteTitle').value.trim() || 'My Blog';
+        const siteDescription = document.getElementById('siteDescription').value.trim();
+        
+        const saved = storageManager.saveSettings({ 
+            blogDirectory, 
+            siteUrl, 
+            siteTitle, 
+            siteDescription 
+        });
         
         if (saved) {
             this.showNotification('Settings saved', 'success');
@@ -447,6 +486,50 @@ class EditorApp {
 
     exportBlog() {
         this.showNotification('Blog exported! All files are in your blog directory.', 'success');
+    }
+
+    generateRss() {
+        const settings = storageManager.getSettings();
+        
+        if (!settings.siteUrl) {
+            this.showNotification('Please set Site URL in Settings first', 'error');
+            this.showSettings();
+            return;
+        }
+
+        const posts = contentManager.getPosts();
+        const success = storageManager.generateRssFeed(
+            posts,
+            settings.siteUrl,
+            settings.siteTitle || 'My Blog',
+            settings.siteDescription || 'My Blog Description'
+        );
+
+        if (success) {
+            this.showNotification('RSS feed generated successfully! (rss.xml)', 'success');
+        } else {
+            this.showNotification('Failed to generate RSS feed', 'error');
+        }
+    }
+
+    generateSitemap() {
+        const settings = storageManager.getSettings();
+        
+        if (!settings.siteUrl) {
+            this.showNotification('Please set Site URL in Settings first', 'error');
+            this.showSettings();
+            return;
+        }
+
+        const posts = contentManager.getPosts();
+        const pages = contentManager.getPages();
+        const success = storageManager.generateSitemap(posts, pages, settings.siteUrl);
+
+        if (success) {
+            this.showNotification('Sitemap generated successfully! (sitemap.xml)', 'success');
+        } else {
+            this.showNotification('Failed to generate sitemap', 'error');
+        }
     }
 
     showNotification(message, type = 'success') {

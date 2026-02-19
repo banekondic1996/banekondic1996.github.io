@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
     <link rel="stylesheet" href="css/editor.css">
 </head>
 <body>
@@ -41,8 +43,15 @@
             </div>
 
             <div class="sidebar-footer">
-                <button id="settingsBtn" class="btn-secondary">⚙ Settings</button>
-                <button id="exportBtn" class="btn-primary">Export Blog</button>
+                <div class="menu-button-container">
+                    <button id="menuBtn" class="btn-primary">⚙ Menu</button>
+                    <div id="menuDropdown" class="menu-dropdown">
+                        <button id="settingsBtn" class="menu-item">⚙ Settings</button>
+                        <button id="generateRssBtn" class="menu-item">📡 Generate RSS</button>
+                        <button id="generateSitemapBtn" class="menu-item">🗺 Generate Sitemap</button>
+                        <button id="exportBtn" class="menu-item">📤 Export Blog</button>
+                    </div>
+                </div>
             </div>
         </aside>
 
@@ -85,6 +94,8 @@
                     <div class="toolbar-group">
                         <button type="button" data-command="createLink" class="toolbar-btn">Link</button>
                         <button type="button" id="insertImageBtn" class="toolbar-btn">Image</button>
+                        <button type="button" id="insertImageUrlBtn" class="toolbar-btn">Image URL</button>
+                        <button type="button" id="insertPreBtn" class="toolbar-btn">&lt;pre&gt;</button>
                     </div>
                     <div class="toolbar-group">
                         <button type="button" id="previewBtn" class="toolbar-btn">👁 Preview</button>
@@ -100,7 +111,7 @@
                 <div class="editor-container">
                     <input type="text" id="contentTitle" placeholder="Enter title..." class="title-input">
                     <div id="visualEditor" class="visual-editor" contenteditable="true"></div>
-                    <textarea id="htmlEditor" class="html-editor" style="display: none;"></textarea>
+                    <textarea id="codeEditor" class="code-editor" style="display: none;"></textarea>
                 </div>
             </div>
         </main>
@@ -172,6 +183,19 @@
                         <button id="chooseDirBtn" class="btn-secondary">Choose</button>
                     </div>
                 </div>
+                <div class="form-row">
+                    <label>Site URL:</label>
+                    <input type="text" id="siteUrl" class="form-input" placeholder="https://example.com">
+                    <small style="color: var(--text-light); font-size: 0.875rem;">Required for RSS feed and sitemap</small>
+                </div>
+                <div class="form-row">
+                    <label>Site Title:</label>
+                    <input type="text" id="siteTitle" class="form-input" placeholder="My Blog">
+                </div>
+                <div class="form-row">
+                    <label>Site Description:</label>
+                    <textarea id="siteDescription" class="form-input" rows="3" placeholder="A blog about..." style="resize: vertical;"></textarea>
+                </div>
             </div>
             <div class="modal-buttons">
                 <button id="saveSettingsBtn" class="btn-primary">Save</button>
@@ -193,6 +217,11 @@
 
     <div id="notification" class="notification"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
     <script src="js/crypto.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/content-manager.js"></script>

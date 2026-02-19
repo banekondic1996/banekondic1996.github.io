@@ -1,9 +1,10 @@
-// WYSIWYG Editor
+// WYSIWYG Editor with CodeMirror
 class WysiwygEditor {
     constructor() {
         this.visualEditor = null;
-        this.htmlEditor = null;
-        this.mode = 'visual'; // 'visual' or 'html'
+        this.codeEditor = null;
+        this.codeMirror = null;
+        this.mode = 'visual';
         this.initialized = false;
     }
 
@@ -11,16 +12,30 @@ class WysiwygEditor {
         if (this.initialized) return;
 
         this.visualEditor = document.getElementById('visualEditor');
-        this.htmlEditor = document.getElementById('htmlEditor');
+        this.codeEditor = document.getElementById('codeEditor');
         
-        if (!this.visualEditor || !this.htmlEditor) return;
+        if (!this.visualEditor) return;
 
         this.setupToolbar();
+        this.initCodeMirror();
         this.initialized = true;
     }
 
+    initCodeMirror() {
+        if (window.CodeMirror && this.codeEditor) {
+            this.codeMirror = CodeMirror.fromTextArea(this.codeEditor, {
+                mode: 'htmlmixed',
+                theme: 'dracula',
+                lineNumbers: true,
+                lineWrapping: true,
+                indentUnit: 2,
+                tabSize: 2
+            });
+            this.codeMirror.setSize(null, '100%');
+        }
+    }
+
     setupToolbar() {
-        // Format buttons
         const formatButtons = document.querySelectorAll('[data-command]');
         formatButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -38,10 +53,10 @@ class WysiwygEditor {
                 }
                 
                 this.visualEditor.focus();
+                this.codeEditor.style.display="none";
             });
         });
 
-        // Image button
         const insertImageBtn = document.getElementById('insertImageBtn');
         if (insertImageBtn) {
             insertImageBtn.addEventListener('click', async (e) => {
@@ -50,7 +65,22 @@ class WysiwygEditor {
             });
         }
 
-        // View HTML button
+        const insertImageUrlBtn = document.getElementById('insertImageUrlBtn');
+        if (insertImageUrlBtn) {
+            insertImageUrlBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.insertImageUrl();
+            });
+        }
+
+        const insertPreBtn = document.getElementById('insertPreBtn');
+        if (insertPreBtn) {
+            insertPreBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.insertPre();
+            });
+        }
+
         const viewHtmlBtn = document.getElementById('viewHtmlBtn');
         if (viewHtmlBtn) {
             viewHtmlBtn.addEventListener('click', (e) => {
@@ -67,17 +97,15 @@ class WysiwygEditor {
 
             const imagePath = await storageManager.saveImage(file);
             
-            // Insert image into editor
             const img = document.createElement('img');
             
-            // Get blog directory to create proper preview path
             const settings = storageManager.getSettings();
             const fullPath = require('path').join(settings.blogDirectory, imagePath);
             
-            // Use file:// protocol for preview in editor
             img.src = 'file://' + fullPath;
-            img.dataset.blogPath = imagePath; // Store relative path for saving
+            img.dataset.blogPath = imagePath;
             img.alt = file.name;
+            img.style.maxWidth = '100%';
             
             const selection = window.getSelection();
             if (selection.rangeCount > 0) {
@@ -93,46 +121,99 @@ class WysiwygEditor {
         }
     }
 
+    insertImageUrl() {
+        const url = prompt('Enter image URL:');
+        if (!url) return;
+
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Image';
+        img.style.maxWidth = '100%';
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            range.insertNode(img);
+            range.collapse(false);
+        } else {
+            this.visualEditor.appendChild(img);
+        }
+    }
+
+    insertPre() {
+        const code = prompt('Enter code:');
+        if (!code) return;
+
+        const pre = document.createElement('pre');
+        const codeEl = document.createElement('code');
+        codeEl.textContent = code;
+        pre.appendChild(codeEl);
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            range.insertNode(pre);
+            range.collapse(false);
+        } else {
+            this.visualEditor.appendChild(pre);
+        }
+    }
+
     toggleMode() {
         if (this.mode === 'visual') {
             // Switch to HTML mode
-            this.htmlEditor.value = this.visualEditor.innerHTML;
-            this.visualEditor.style.display = 'none';
-            this.htmlEditor.style.display = 'block';
-            this.mode = 'html';
+            if (this.codeMirror) {
+                this.codeMirror.setValue(this.visualEditor.innerHTML);
+                this.visualEditor.style.display = 'none';
+                this.codeMirror.getWrapperElement().style.display = 'block';
+                this.codeMirror.refresh();
+                this.mode = 'html';
+            }
         } else {
             // Switch to visual mode
-            this.visualEditor.innerHTML = this.htmlEditor.value;
-            this.htmlEditor.style.display = 'none';
-            this.visualEditor.style.display = 'block';
-            this.mode = 'visual';
+            if (this.codeMirror) {
+                this.visualEditor.innerHTML = this.codeMirror.getValue();
+                this.codeMirror.getWrapperElement().style.display = 'none';
+                this.visualEditor.style.display = 'block';
+                this.mode = 'visual';
+            }
         }
     }
 
     getContent() {
-        if (this.mode === 'html') {
-            return this.htmlEditor.value;
+        if (this.mode === 'html' && this.codeMirror) {
+            return this.cleanContent(this.codeMirror.getValue());
         }
         
-        // Get content and fix image paths
         let content = this.visualEditor.innerHTML;
         
-        // Convert file:// paths back to relative paths for blog
+        // Convert file:// paths back to relative paths
         const images = this.visualEditor.querySelectorAll('img[data-blog-path]');
         images.forEach(img => {
             const blogPath = img.dataset.blogPath;
             if (blogPath) {
-                // Replace the file:// path with the relative path in the content
                 content = content.replace(img.src, blogPath);
             }
         });
         
-        return content;
+        return this.cleanContent(content);
+    }
+
+    cleanContent(html) {
+        // Remove unwanted styles
+        html = html.replace(/white-space:\s*nowrap;?/gi, '');
+        html = html.replace(/font-family:\s*-apple-system[^;"]*(;|")/gi, '');
+        
+        // Add word-break to prevent overflow
+        html = html.replace(/<p>/gi, '<p style="word-break: break-word;">');
+        html = html.replace(/<div>/gi, '<div style="word-break: break-word;">');
+        
+        return html;
     }
 
     setContent(content) {
-        if (this.mode === 'html') {
-            this.htmlEditor.value = content;
+        if (this.mode === 'html' && this.codeMirror) {
+            this.codeMirror.setValue(content);
         } else {
             this.visualEditor.innerHTML = content;
         }
@@ -140,7 +221,13 @@ class WysiwygEditor {
 
     clear() {
         this.visualEditor.innerHTML = '';
-        this.htmlEditor.value = '';
+        if (this.codeMirror) {
+            this.codeMirror.setValue('');
+        }
+        // Switch back to visual mode if in HTML mode
+        if (this.mode === 'html') {
+            this.toggleMode();
+        }
     }
 }
 
