@@ -2,6 +2,20 @@
 const BLOG_POSTS = {
   "posts": [
     {
+      "id": "1771536488814",
+      "slug": "meme-s-test-page",
+      "title": "Meme's test page",
+      "author": "Someone",
+      "date": "2026-02-19",
+      "categories": [
+        "Thoughts",
+        "Memes"
+      ],
+      "excerpt": "Made by me:",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh1J_CJCE_l12RaCYjinrgn22Nec_ll7Trew&s",
+      "encrypted": false
+    },
+    {
       "id": "1771416753021",
       "slug": "secret-post-password-is-jmbg-of-my-crush",
       "title": "Secret post (password is JMBG of my crush)",
