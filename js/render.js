@@ -53,6 +53,16 @@ class BlogRenderer {
         card.className = 'post-card';
         card.href = `#post/${post.slug}`;
 
+        // Thumbnail
+        if (post.thumbnail) {
+            const img = document.createElement('img');
+            img.src = post.thumbnail;
+            img.alt = post.title;
+            img.className = 'post-card-thumbnail';
+            img.onerror = function() { this.style.display = 'none'; };
+            card.appendChild(img);
+        }
+
         // Categories
         if (post.categories && post.categories.length > 0) {
             const categoriesDiv = document.createElement('div');

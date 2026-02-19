@@ -5,6 +5,7 @@
     let allPages = [];
     let navigation = [];
     let currentView = 'home';
+    let previousView = 'home'; // Track where we came from
     let selectedCategory = null;
     let isThoughtsView = false;
     let postsPerPage = 10;
@@ -104,6 +105,14 @@
             shareBtn.addEventListener('click', showShareModal);
         }
 
+        // Back button handler
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('back-link') || e.target.closest('.back-link')) {
+                e.preventDefault();
+                goBack();
+            }
+        });
+
         const closeShareModal = document.getElementById('closeShareModal');
         const copyLinkBtn = document.getElementById('copyLinkBtn');
         
@@ -167,12 +176,26 @@
             showCategory(category);
         } else if (hash === '#thoughts') {
             showThoughts();
+        } else if (hash === '#back') {
+            // Handle back navigation
+            goBack();
         } else {
             showHome();
         }
     }
 
+    function goBack() {
+        if (previousView === 'thoughts') {
+            window.location.hash = '#thoughts';
+        } else if (previousView === 'category' && selectedCategory) {
+            window.location.hash = `#category/${encodeURIComponent(selectedCategory)}`;
+        } else {
+            window.location.hash = '';
+        }
+    }
+
     function showHome() {
+        previousView = 'home';
         currentView = 'home';
         selectedCategory = null;
         isThoughtsView = false;
@@ -204,9 +227,12 @@
         if (navMenu) {
             navMenu.classList.remove('active');
         }
+        
+        window.scrollTo(0, 0);
     }
 
     function showThoughts() {
+        previousView = 'thoughts';
         currentView = 'thoughts';
         selectedCategory = null;
         isThoughtsView = true;
@@ -238,6 +264,8 @@
         if (navMenu) {
             navMenu.classList.remove('active');
         }
+        
+        window.scrollTo(0, 0);
     }
 
     async function showPost(slug) {
@@ -372,6 +400,40 @@
         };
     }
 
+    function setupSocialShare() {
+        const shareTwitterBtn = document.getElementById('shareTwitterBtn');
+        const shareFacebookBtn = document.getElementById('shareFacebookBtn');
+        const shareLinkedInBtn = document.getElementById('shareLinkedInBtn');
+        const shareRedditBtn = document.getElementById('shareRedditBtn');
+        
+        const url = window.location.href;
+        const title = document.getElementById('postTitle').textContent;
+        
+        if (shareTwitterBtn) {
+            shareTwitterBtn.onclick = () => {
+                window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank');
+            };
+        }
+        
+        if (shareFacebookBtn) {
+            shareFacebookBtn.onclick = () => {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            };
+        }
+        
+        if (shareLinkedInBtn) {
+            shareLinkedInBtn.onclick = () => {
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+            };
+        }
+        
+        if (shareRedditBtn) {
+            shareRedditBtn.onclick = () => {
+                window.open(`https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`, '_blank');
+            };
+        }
+    }
+
     function showPage(slug) {
         const page = allPages.find(p => p.slug === slug);
         if (!page) {
@@ -397,6 +459,7 @@
     }
 
     function showCategory(category) {
+        previousView = 'category';
         currentView = 'category';
         selectedCategory = category;
         isThoughtsView = false;
@@ -425,6 +488,8 @@
         loadMorePosts();
         
         document.title = category + ' - My Blog';
+        
+        window.scrollTo(0, 0);
     }
 
     function performSearch(query) {
@@ -502,6 +567,7 @@
         const shareLink = document.getElementById('shareLink');
         shareLink.value = window.location.href;
         modal.classList.add('active');
+        setupSocialShare();
     }
 
     function copyShareLink() {

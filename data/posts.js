@@ -2,6 +2,17 @@
 const BLOG_POSTS = {
   "posts": [
     {
+      "id": "1771533520596",
+      "slug": "future-of-pc-s-an",
+      "title": "Future of PC's an",
+      "author": "",
+      "date": "2026-02-19",
+      "categories": [],
+      "excerpt": "zxcvzxcv",
+      "thumbnail": "https://numberdyslexia.com/wp-content/uploads/2022/09/1-16.jpg",
+      "encrypted": false
+    },
+    {
       "id": "1771416753021",
       "slug": "secret-post-password-is-jmbg-of-my-crush",
       "title": "Secret post (password is JMBG of my crush)",
@@ -11,6 +22,7 @@ const BLOG_POSTS = {
         "Life"
       ],
       "excerpt": "",
+      "thumbnail": "",
       "encrypted": true
     },
     {
@@ -25,6 +37,7 @@ const BLOG_POSTS = {
         "Thoughts"
       ],
       "excerpt": "",
+      "thumbnail": "",
       "encrypted": true
     },
     {
@@ -38,6 +51,7 @@ const BLOG_POSTS = {
         "Future"
       ],
       "excerpt": "Ah. Let's just hope ARM laptops and future ARM PC's don't get locked only to Windows, cause such devices already exist, like Chromebooks locked to Chr...",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -52,6 +66,7 @@ const BLOG_POSTS = {
         "Life"
       ],
       "excerpt": "I keep reading about hidden technologies, taken away, so that they don't release it. Mostly usually it gets bought and locked away. I even joked few t...",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -66,6 +81,7 @@ const BLOG_POSTS = {
         "Thoughts"
       ],
       "excerpt": "I wish i had IMSI catcher watch with phased array antenna. And when I'm near someone i just press the watch, get 3 strongest signals and bam, I got th...",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -80,6 +96,7 @@ const BLOG_POSTS = {
         "Want"
       ],
       "excerpt": "I don't like mechanical keyboards and big keycaps. I only like low profile keys like on laptops. Razer Ornata is my favorite that uses Mecha-Membrane...",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -95,6 +112,7 @@ const BLOG_POSTS = {
         "Thoughts"
       ],
       "excerpt": "",
+      "thumbnail": "",
       "encrypted": true
     },
     {
@@ -109,6 +127,7 @@ const BLOG_POSTS = {
         "Thoughts"
       ],
       "excerpt": "",
+      "thumbnail": "",
       "encrypted": true
     },
     {
@@ -123,6 +142,7 @@ const BLOG_POSTS = {
         "Theory"
       ],
       "excerpt": "Moji podsetnik:1.Brisanje podataka u odnosu na listu priorita2.Asocijaniranje elemenata koji se ponavljaju za podatke trajne memorije3.Korišćenje modu...",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -136,6 +156,7 @@ const BLOG_POSTS = {
         "3D"
       ],
       "excerpt": "To attach clothing in Maya easy way to character, just create for example t-shirt you want to attach to character, place it over body like this, and t...",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -148,6 +169,7 @@ const BLOG_POSTS = {
         "Life"
       ],
       "excerpt": "",
+      "thumbnail": "",
       "encrypted": false
     },
     {
@@ -160,6 +182,7 @@ const BLOG_POSTS = {
         "Secret"
       ],
       "excerpt": "",
+      "thumbnail": "",
       "encrypted": true
     },
     {
@@ -173,6 +196,7 @@ const BLOG_POSTS = {
         "Recommendations"
       ],
       "excerpt": "Firstly install KDE:sudo apt install kde-plasma-desktopThen remove Gnome stuff:sudo apt purge ubuntu-gnome-desktop gnome-shell gnome-session gdm3 gnom...",
+      "thumbnail": "",
       "encrypted": false
     }
   ]
