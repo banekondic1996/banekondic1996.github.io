@@ -176,6 +176,11 @@
         currentView = 'home';
         selectedCategory = null;
         isThoughtsView = false;
+        
+        // Clear post content
+        document.getElementById('postContent').innerHTML = '';
+        document.getElementById('encryptedNotice').style.display = 'none';
+        
         document.getElementById('homeView').style.display = 'block';
         document.getElementById('postView').style.display = 'none';
         document.getElementById('pageView').style.display = 'none';
@@ -205,6 +210,11 @@
         currentView = 'thoughts';
         selectedCategory = null;
         isThoughtsView = true;
+        
+        // Clear post content
+        document.getElementById('postContent').innerHTML = '';
+        document.getElementById('encryptedNotice').style.display = 'none';
+        
         document.getElementById('homeView').style.display = 'block';
         document.getElementById('postView').style.display = 'none';
         document.getElementById('pageView').style.display = 'none';
@@ -242,6 +252,11 @@
         document.getElementById('postView').style.display = 'block';
         document.getElementById('pageView').style.display = 'none';
 
+        // Clear previous content immediately
+        document.getElementById('postContent').innerHTML = '';
+        document.getElementById('postContent').style.display = 'none';
+        document.getElementById('encryptedNotice').style.display = 'none';
+
         document.getElementById('postTitle').textContent = post.title;
         document.getElementById('postDate').textContent = formatDate(post.date);
         document.getElementById('postAuthor').textContent = post.author ? `By ${post.author}` : '';
@@ -259,18 +274,23 @@
         }
 
         // Load content dynamically
-        if (post.encrypted && post.encryptedContent) {
-            document.getElementById('postContent').style.display = 'none';
-            document.getElementById('encryptedNotice').style.display = 'block';
-            setupDecryption(post);
-        } else {
-            try {
-                await loadPostContent(post.slug);
-            } catch (error) {
-                document.getElementById('postContent').innerHTML = '<p>Error loading post content.</p>';
+        try {
+            await loadPostContent(post.slug);
+            
+            // Check if content is encrypted
+            if (window.POST_CONTENT && window.POST_CONTENT.encrypted && window.POST_CONTENT.encryptedContent) {
+                document.getElementById('postContent').style.display = 'none';
+                document.getElementById('encryptedNotice').style.display = 'block';
+                setupDecryption(window.POST_CONTENT.encryptedContent);
+            } else if (window.POST_CONTENT && window.POST_CONTENT.content) {
+                document.getElementById('postContent').innerHTML = window.POST_CONTENT.content;
+                document.getElementById('postContent').style.display = 'block';
             }
+            
+            delete window.POST_CONTENT;
+        } catch (error) {
+            document.getElementById('postContent').innerHTML = '<p>Error loading post content.</p>';
             document.getElementById('postContent').style.display = 'block';
-            document.getElementById('encryptedNotice').style.display = 'none';
         }
 
         window.scrollTo(0, 0);
@@ -281,9 +301,7 @@
             const script = document.createElement('script');
             script.src = `data/posts/${slug}.js`;
             script.onload = () => {
-                if (window.POST_CONTENT && window.POST_CONTENT.content) {
-                    document.getElementById('postContent').innerHTML = window.POST_CONTENT.content;
-                    delete window.POST_CONTENT;
+                if (window.POST_CONTENT) {
                     resolve();
                 } else {
                     reject(new Error('Content not found'));
@@ -294,7 +312,7 @@
         });
     }
 
-    function setupDecryption(post) {
+    function setupDecryption(encryptedContent) {
         const unlockBtn = document.getElementById('unlockBtn');
         const modal = document.getElementById('decryptModal');
         const decryptBtn = document.getElementById('decryptBtn');
@@ -332,7 +350,7 @@
             errorEl.textContent = '';
 
             try {
-                const decryptedHtml = await blogCrypto.decrypt(post.encryptedContent, password);
+                const decryptedHtml = await blogCrypto.decrypt(encryptedContent, password);
                 
                 modal.classList.remove('active');
                 document.getElementById('encryptedNotice').style.display = 'none';
@@ -362,6 +380,11 @@
         }
 
         currentView = 'page';
+        
+        // Clear post content
+        document.getElementById('postContent').innerHTML = '';
+        document.getElementById('encryptedNotice').style.display = 'none';
+        
         document.getElementById('homeView').style.display = 'none';
         document.getElementById('postView').style.display = 'none';
         document.getElementById('pageView').style.display = 'block';
@@ -377,6 +400,11 @@
         currentView = 'category';
         selectedCategory = category;
         isThoughtsView = false;
+        
+        // Clear post content
+        document.getElementById('postContent').innerHTML = '';
+        document.getElementById('encryptedNotice').style.display = 'none';
+        
         document.getElementById('homeView').style.display = 'block';
         document.getElementById('postView').style.display = 'none';
         document.getElementById('pageView').style.display = 'none';

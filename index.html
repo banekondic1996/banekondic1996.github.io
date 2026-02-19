@@ -6,10 +6,11 @@
     <meta name="description" content="Bane Kondic - Blog">
     <meta name="google-site-verification" content="YFPnY3RELLXBumKlxJ64gO6ssBIAtq0IrgwQw-3lnK0" />
     <title>Blog - Branislav (Bane) Kondic</title>
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="rss.xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="https://raw.githubusercontent.com/banekondic1996/banekondic1996.github.io/refs/heads/main/icons/42.ico" type="image/png">
+    <link rel="icon" href="https://raw.githubusercontent.com/banekondic1996/banekondic1996.github.io/refs/heads/main/icons/42.png" type="image/png">
 </head>
 <body>
     <nav class="navbar">
@@ -145,8 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const intervalId = setInterval(() => {
         setFavicon(currentIndex);
-        console.log("Icon " + currentIndex);
-
         if (currentIndex >= totalIcons) {
             clearInterval(intervalId); 
             console.log("Animation finished");
