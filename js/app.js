@@ -1,19 +1,30 @@
 // Main blog application
 (function() {
     let allPosts = [];
+    let displayedPosts = [];
     let allPages = [];
     let navigation = [];
     let currentView = 'home';
     let selectedCategory = null;
+    let isThoughtsView = false;
+    let postsPerPage = 10;
+    let currentPage = 0;
+    let isLoading = false;
 
     function init() {
         allPosts = BLOG_POSTS.posts || [];
         allPages = BLOG_PAGES.pages || [];
         navigation = BLOG_PAGES.navigation || [];
         
-        blogSearch.setPosts(allPosts);
+        // Filter out Thoughts posts from regular view
+        const regularPosts = allPosts.filter(post => 
+            !post.categories || !post.categories.includes('Thoughts')
+        );
+        blogSearch.setPosts(regularPosts);
+        
         setupNavigation();
         setupEventListeners();
+        setupLazyLoading();
         handleRoute();
         renderCategories();
         
@@ -48,7 +59,6 @@
                 
                 navItem.appendChild(dropdown);
                 
-                // Mobile: toggle submenu on click
                 link.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768 && item.submenu.length > 0) {
                         e.preventDefault();
@@ -72,7 +82,6 @@
             }, 300);
         });
 
-        // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const navMenu = document.getElementById('navMenu');
         
@@ -82,7 +91,6 @@
             });
         }
 
-        // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 if (!e.target.closest('.nav-container')) {
@@ -91,13 +99,11 @@
             }
         });
 
-        // Share button
         const shareBtn = document.getElementById('shareBtn');
         if (shareBtn) {
             shareBtn.addEventListener('click', showShareModal);
         }
 
-        // Share modal
         const closeShareModal = document.getElementById('closeShareModal');
         const copyLinkBtn = document.getElementById('copyLinkBtn');
         
@@ -112,6 +118,41 @@
         }
     }
 
+    function setupLazyLoading() {
+        const postsContainer = document.getElementById('postsContainer');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isLoading) {
+                    loadMorePosts();
+                }
+            });
+        }, {
+            rootMargin: '100px'
+        });
+
+        const sentinel = document.createElement('div');
+        sentinel.id = 'loadMoreSentinel';
+        sentinel.style.height = '1px';
+        postsContainer.parentElement.appendChild(sentinel);
+        observer.observe(sentinel);
+    }
+
+    function loadMorePosts() {
+        const posts = blogSearch.getFilteredPosts();
+        const start = currentPage * postsPerPage;
+        const end = start + postsPerPage;
+        const newPosts = posts.slice(start, end);
+
+        if (newPosts.length === 0) return;
+
+        isLoading = true;
+        blogRenderer.appendPosts(newPosts);
+        displayedPosts.push(...newPosts);
+        currentPage++;
+        isLoading = false;
+    }
+
     function handleRoute() {
         const hash = window.location.hash;
         
@@ -124,6 +165,8 @@
         } else if (hash.startsWith('#category/')) {
             const category = decodeURIComponent(hash.replace('#category/', ''));
             showCategory(category);
+        } else if (hash === '#thoughts') {
+            showThoughts();
         } else {
             showHome();
         }
@@ -132,24 +175,62 @@
     function showHome() {
         currentView = 'home';
         selectedCategory = null;
+        isThoughtsView = false;
         document.getElementById('homeView').style.display = 'block';
         document.getElementById('postView').style.display = 'none';
         document.getElementById('pageView').style.display = 'none';
         
-        // Reset to all posts
-        blogSearch.setPosts(allPosts);
+        // Filter out Thoughts posts
+        const regularPosts = allPosts.filter(post => 
+            !post.categories || !post.categories.includes('Thoughts')
+        );
+        
+        blogSearch.setPosts(regularPosts);
+        currentPage = 0;
+        displayedPosts = [];
+        blogRenderer.clearPosts();
+        
         const sortedPosts = blogSearch.sortByDate(false);
-        blogRenderer.renderPosts(sortedPosts);
+        loadMorePosts();
+        
         document.title = 'My Blog';
         
-        // Close mobile menu
         const navMenu = document.getElementById('navMenu');
         if (navMenu) {
             navMenu.classList.remove('active');
         }
     }
 
-    function showPost(slug) {
+    function showThoughts() {
+        currentView = 'thoughts';
+        selectedCategory = null;
+        isThoughtsView = true;
+        document.getElementById('homeView').style.display = 'block';
+        document.getElementById('postView').style.display = 'none';
+        document.getElementById('pageView').style.display = 'none';
+        
+        // Only show posts with Thoughts category
+        const thoughtsPosts = allPosts.filter(post => 
+            post.categories && post.categories.includes('Thoughts')
+        );
+        
+        blogSearch.setPosts(thoughtsPosts);
+        currentPage = 0;
+        displayedPosts = [];
+        blogRenderer.clearPosts();
+        
+        const sortedPosts = blogSearch.sortByDate(false);
+        loadMorePosts();
+        
+        document.title = 'Thoughts - My Blog';
+        
+        const navMenu = document.getElementById('navMenu');
+        if (navMenu) {
+            navMenu.classList.remove('active');
+        }
+    }
+
+    async function showPost(slug) {
         const post = allPosts.find(p => p.slug === slug);
         if (!post) {
             window.location.hash = '';
@@ -161,13 +242,11 @@
         document.getElementById('postView').style.display = 'block';
         document.getElementById('pageView').style.display = 'none';
 
-        // Render post
         document.getElementById('postTitle').textContent = post.title;
         document.getElementById('postDate').textContent = formatDate(post.date);
         document.getElementById('postAuthor').textContent = post.author ? `By ${post.author}` : '';
         document.title = post.title + ' - My Blog';
 
-        // Render categories
         const categoriesEl = document.getElementById('postCategories');
         categoriesEl.innerHTML = '';
         if (post.categories && post.categories.length > 0) {
@@ -179,18 +258,40 @@
             });
         }
 
-        // Handle content - encrypted or plain
+        // Load content dynamically
         if (post.encrypted && post.encryptedContent) {
             document.getElementById('postContent').style.display = 'none';
             document.getElementById('encryptedNotice').style.display = 'block';
             setupDecryption(post);
         } else {
-            document.getElementById('postContent').innerHTML = post.content;
+            try {
+                await loadPostContent(post.slug);
+            } catch (error) {
+                document.getElementById('postContent').innerHTML = '<p>Error loading post content.</p>';
+            }
             document.getElementById('postContent').style.display = 'block';
             document.getElementById('encryptedNotice').style.display = 'none';
         }
 
         window.scrollTo(0, 0);
+    }
+
+    async function loadPostContent(slug) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = `data/posts/${slug}.js`;
+            script.onload = () => {
+                if (window.POST_CONTENT && window.POST_CONTENT.content) {
+                    document.getElementById('postContent').innerHTML = window.POST_CONTENT.content;
+                    delete window.POST_CONTENT;
+                    resolve();
+                } else {
+                    reject(new Error('Content not found'));
+                }
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
     }
 
     function setupDecryption(post) {
@@ -275,43 +376,67 @@
     function showCategory(category) {
         currentView = 'category';
         selectedCategory = category;
+        isThoughtsView = false;
         document.getElementById('homeView').style.display = 'block';
         document.getElementById('postView').style.display = 'none';
         document.getElementById('pageView').style.display = 'none';
 
-        const filteredPosts = allPosts.filter(post => 
-            post.categories && post.categories.includes(category)
-        );
+        // Filter by category, excluding Thoughts posts
+        let filteredPosts = allPosts.filter(post => {
+            const hasCategory = post.categories && post.categories.includes(category);
+            const isThought = post.categories && post.categories.includes('Thoughts');
+            return hasCategory && !isThought;
+        });
         
         blogSearch.setPosts(filteredPosts);
+        currentPage = 0;
+        displayedPosts = [];
+        blogRenderer.clearPosts();
+        
         const sortedPosts = blogSearch.sortByDate(false);
-        blogRenderer.renderPosts(sortedPosts);
+        loadMorePosts();
         
         document.title = category + ' - My Blog';
     }
 
     function performSearch(query) {
-        if (selectedCategory) {
-            const filteredPosts = allPosts.filter(post => 
-                post.categories && post.categories.includes(selectedCategory)
+        let posts;
+        if (isThoughtsView) {
+            posts = allPosts.filter(post => 
+                post.categories && post.categories.includes('Thoughts')
             );
-            blogSearch.setPosts(filteredPosts);
         } else {
-            blogSearch.setPosts(allPosts);
+            posts = allPosts.filter(post => 
+                !post.categories || !post.categories.includes('Thoughts')
+            );
         }
         
+        if (selectedCategory) {
+            posts = posts.filter(post => 
+                post.categories && post.categories.includes(selectedCategory)
+            );
+        }
+        
+        blogSearch.setPosts(posts);
         const results = blogSearch.search(query);
+        currentPage = 0;
+        displayedPosts = [];
+        blogRenderer.clearPosts();
+        
         const sortedResults = blogSearch.sortByDate(false);
-        blogRenderer.renderPosts(sortedResults);
+        loadMorePosts();
     }
 
     function renderCategories() {
         const categoriesMap = {};
         
+        // Only count non-Thoughts posts
         allPosts.forEach(post => {
             if (post.categories) {
                 post.categories.forEach(cat => {
-                    categoriesMap[cat] = (categoriesMap[cat] || 0) + 1;
+                    if (cat !== 'Thoughts') {
+                        categoriesMap[cat] = (categoriesMap[cat] || 0) + 1;
+                    }
                 });
             }
         });
@@ -319,17 +444,19 @@
         const categoriesList = document.getElementById('categoriesList');
         categoriesList.innerHTML = '';
 
-        // Add "All" category
+        const regularPostsCount = allPosts.filter(post => 
+            !post.categories || !post.categories.includes('Thoughts')
+        ).length;
+
         const allItem = document.createElement('a');
         allItem.href = '#';
         allItem.className = 'category-item';
         allItem.innerHTML = `
             <span>All Posts</span>
-            <span class="category-count">${allPosts.length}</span>
+            <span class="category-count">${regularPostsCount}</span>
         `;
         categoriesList.appendChild(allItem);
 
-        // Add other categories
         Object.keys(categoriesMap).sort().forEach(category => {
             const item = document.createElement('a');
             item.href = `#category/${encodeURIComponent(category)}`;

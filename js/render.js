@@ -27,6 +27,27 @@ class BlogRenderer {
         });
     }
 
+    clearPosts() {
+        if (!this.container) return;
+        this.container.innerHTML = '';
+        if (this.noResultsEl) {
+            this.noResultsEl.style.display = 'none';
+        }
+    }
+
+    appendPosts(posts) {
+        if (!this.container) return;
+
+        if (this.noResultsEl) {
+            this.noResultsEl.style.display = 'none';
+        }
+
+        posts.forEach(post => {
+            const postCard = this.createPostCard(post);
+            this.container.appendChild(postCard);
+        });
+    }
+
     createPostCard(post) {
         const card = document.createElement('a');
         card.className = 'post-card';

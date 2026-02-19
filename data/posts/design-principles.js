@@ -1,0 +1,3 @@
+POST_CONTENT = {
+  "content": "<h2>The Basics of Good Design</h2><p>Good design is more than just making things look pretty. It's about creating intuitive, functional, and accessible experiences for users.</p><h3>1. Contrast</h3><p>Contrast helps guide the user's eye and makes important elements stand out.</p><h3>2. Alignment</h3><p>Proper alignment creates a clean, organized look and helps establish visual connections.</p><h3>3. Repetition</h3><p>Repeating design elements creates consistency and strengthens your visual identity.</p><h3>4. Proximity</h3><p>Group related items together to create organization and reduce clutter.</p><p>By following these principles, you can create designs that are both beautiful and functional.</p>"
+};

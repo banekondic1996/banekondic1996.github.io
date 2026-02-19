@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bane Kondic - Blog</title>
+    <link>https://banekondic1996.github.io/</link>
+    <description>Bane Kondic - Blog</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Feb 2026 11:03:12 GMT</lastBuildDate>
+    <atom:link href="https://banekondic1996.github.io//rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Future of PC&apos;s and thoughts reading tech</title>
+      <link>https://banekondic1996.github.io/#post/future-of-pc-s-and-thoughts-reading-tech</link>
+      <guid>https://banekondic1996.github.io/#post/future-of-pc-s-and-thoughts-reading-tech</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description>Ah. Let&apos;s just hope ARM laptops and future ARM PC&apos;s don&apos;t get locked only to Windows, cause such devices already exist, like Chromebooks locked to Chr...</description>
+      <category>Technology</category>
+      <category>Future</category>
+    </item>
+    <item>
+      <title>Keyboard that I want, but it doesn&apos;t exist</title>
+      <link>https://banekondic1996.github.io/#post/keyboard-that-i-want-but-it-doesn-t-exist</link>
+      <guid>https://banekondic1996.github.io/#post/keyboard-that-i-want-but-it-doesn-t-exist</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description>I don&apos;t like mechanical keyboards and big keycaps. I only like low profile keys like on laptops. Razer Ornata is my favorite that uses Mecha-Membrane...</description>
+      <category>Technology</category>
+      <category>Computers</category>
+      <category>Want</category>
+    </item>
+    <item>
+      <title>Teorije za AI (moguće i ne potvrđene) (stari post)</title>
+      <link>https://banekondic1996.github.io/#post/teorije-za-ai-mogu-e-i-ne-potvr-ene-stari-post</link>
+      <guid>https://banekondic1996.github.io/#post/teorije-za-ai-mogu-e-i-ne-potvr-ene-stari-post</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description>Moji podsetnik:1.Brisanje podataka u odnosu na listu priorita2.Asocijaniranje elemenata koji se ponavljaju za podatke trajne memorije3.Korišćenje modu...</description>
+      <category>AI</category>
+      <category>Serbian</category>
+      <category>Theory</category>
+    </item>
+    <item>
+      <title>Maya – Attaching clothes to character (for slow pcs)</title>
+      <link>https://banekondic1996.github.io/#post/maya-attaching-clothes-to-character-for-slow-pcs</link>
+      <guid>https://banekondic1996.github.io/#post/maya-attaching-clothes-to-character-for-slow-pcs</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description>To attach clothing in Maya easy way to character, just create for example t-shirt you want to attach to character, place it over body like this, and t...</description>
+      <category>Design</category>
+      <category>3D</category>
+    </item>
+    <item>
+      <title>No pain women</title>
+      <link>https://banekondic1996.github.io/#post/no-pain-women</link>
+      <guid>https://banekondic1996.github.io/#post/no-pain-women</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description></description>
+      <category>Life</category>
+    </item>
+    <item>
+      <title>Installing KDE on Ubuntu and making it faster, + app recommendations</title>
+      <link>https://banekondic1996.github.io/#post/installing-kde-on-ubuntu-and-making-it-faster-app-recommendations</link>
+      <guid>https://banekondic1996.github.io/#post/installing-kde-on-ubuntu-and-making-it-faster-app-recommendations</guid>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+      <description>Firstly install KDE:sudo apt install kde-plasma-desktopThen remove Gnome stuff:sudo apt purge ubuntu-gnome-desktop gnome-shell gnome-session gdm3 gnom...</description>
+      <category>Computers</category>
+      <category>Recommendations</category>
+    </item>
+  </channel>
+</rss>

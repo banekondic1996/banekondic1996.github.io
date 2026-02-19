@@ -2,13 +2,18 @@
 const BLOG_PAGES = {
   "navigation": [
     {
-      "label": "About",
-      "link": "#page/About",
+      "label": "Thoughts",
+      "link": "#thoughts",
       "submenu": []
     },
     {
       "label": "Contact",
       "link": "#page/contact",
+      "submenu": []
+    },
+    {
+      "label": "About",
+      "link": "#page/About",
       "submenu": []
     }
   ],
@@ -27,3 +32,4 @@ const BLOG_PAGES = {
     }
   ]
 };
+
