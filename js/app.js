@@ -228,7 +228,7 @@
         const sortedPosts = blogSearch.sortByDate(false);
         loadMorePosts();
         
-        document.title = 'My Blog';
+        document.title = 'Bane Kondic - Blog';
         
         const navMenu = document.getElementById('navMenu');
         if (navMenu) {
@@ -273,7 +273,7 @@
         const sortedPosts = blogSearch.sortByDate(false);
         loadMorePosts();
         
-        document.title = 'Thoughts - My Blog';
+        document.title = 'Thoughts - Bane Kondic';
         
         const navMenu = document.getElementById('navMenu');
         if (navMenu) {
@@ -313,7 +313,7 @@
         document.getElementById('postTitle').textContent = post.title;
         document.getElementById('postDate').textContent = formatDate(post.date);
         document.getElementById('postAuthor').textContent = post.author ? `By ${post.author}` : '';
-        document.title = post.title + ' - My Blog';
+        document.title = post.title + ' - Bane Kondic - Blog';
 
         const categoriesEl = document.getElementById('postCategories');
         categoriesEl.innerHTML = '';
@@ -513,7 +513,7 @@
         const sortedPosts = blogSearch.sortByDate(false);
         loadMorePosts();
         
-        document.title = category + ' - My Blog';
+        document.title = category + ' - Bane Kondic - Blog';
         
         // Restore scroll position if coming back from post, otherwise scroll to top
         if (wasViewingPost && savedScrollPosition > 0) {

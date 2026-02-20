@@ -19,7 +19,7 @@ class StorageManager {
         return { 
             blogDirectory: '',
             siteUrl: '',
-            siteTitle: 'My Blog',
+            siteTitle: 'Bane Kondic - Blog',
             siteDescription: ''
         };
     }
