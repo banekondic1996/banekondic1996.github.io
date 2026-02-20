@@ -2,9 +2,8 @@
 **To do:**
 <pre>
 -Make post sorting possible
+-Don't add unnecessary styling for each element when writing post
 -Show locks on encrypted posts
--Save scroll position on main blog when visiting posts
--Add HTML code reformating
 -Encrypt images
 -Add newsletter subscription
 </pre>
