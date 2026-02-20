@@ -35,6 +35,32 @@ class WysiwygEditor {
     }
 
     setupToolbar() {
+        // Undo/Redo buttons
+        const undoBtn = document.getElementById('undoBtn');
+        const redoBtn = document.getElementById('redoBtn');
+        
+        if (undoBtn) {
+            undoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (this.mode === 'html' && this.codeMirror) {
+                    this.codeMirror.undo();
+                } else {
+                    document.execCommand('undo', false, null);
+                }
+            });
+        }
+        
+        if (redoBtn) {
+            redoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (this.mode === 'html' && this.codeMirror) {
+                    this.codeMirror.redo();
+                } else {
+                    document.execCommand('redo', false, null);
+                }
+            });
+        }
+        
         const formatButtons = document.querySelectorAll('[data-command]');
         formatButtons.forEach(button => {
             button.addEventListener('click', (e) => {

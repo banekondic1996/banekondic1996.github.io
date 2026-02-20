@@ -11,6 +11,7 @@
     let postsPerPage = 10;
     let currentPage = 0;
     let isLoading = false;
+    let savedScrollPosition = 0; // Track scroll position
 
     function init() {
         allPosts = BLOG_POSTS.posts || [];
@@ -192,10 +193,16 @@
         } else {
             window.location.hash = '';
         }
+        
+        // Restore scroll position after navigation
+        setTimeout(() => {
+            window.scrollTo(0, savedScrollPosition);
+        }, 0);
     }
 
     function showHome() {
         previousView = 'home';
+        const wasViewingPost = currentView === 'post';
         currentView = 'home';
         selectedCategory = null;
         isThoughtsView = false;
@@ -228,11 +235,19 @@
             navMenu.classList.remove('active');
         }
         
-        window.scrollTo(0, 0);
+        // Restore scroll position if coming back from post, otherwise scroll to top
+        if (wasViewingPost && savedScrollPosition > 0) {
+            setTimeout(() => {
+                window.scrollTo(0, savedScrollPosition);
+            }, 0);
+        } else {
+            window.scrollTo(0, 0);
+        }
     }
 
     function showThoughts() {
         previousView = 'thoughts';
+        const wasViewingPost = currentView === 'post';
         currentView = 'thoughts';
         selectedCategory = null;
         isThoughtsView = true;
@@ -265,10 +280,20 @@
             navMenu.classList.remove('active');
         }
         
-        window.scrollTo(0, 0);
+        // Restore scroll position if coming back from post, otherwise scroll to top
+        if (wasViewingPost && savedScrollPosition > 0) {
+            setTimeout(() => {
+                window.scrollTo(0, savedScrollPosition);
+            }, 0);
+        } else {
+            window.scrollTo(0, 0);
+        }
     }
 
     async function showPost(slug) {
+        // Save current scroll position
+        savedScrollPosition = window.scrollY || window.pageYOffset;
+        
         const post = allPosts.find(p => p.slug === slug);
         if (!post) {
             window.location.hash = '';
@@ -460,6 +485,7 @@
 
     function showCategory(category) {
         previousView = 'category';
+        const wasViewingPost = currentView === 'post';
         currentView = 'category';
         selectedCategory = category;
         isThoughtsView = false;
@@ -489,7 +515,14 @@
         
         document.title = category + ' - My Blog';
         
-        window.scrollTo(0, 0);
+        // Restore scroll position if coming back from post, otherwise scroll to top
+        if (wasViewingPost && savedScrollPosition > 0) {
+            setTimeout(() => {
+                window.scrollTo(0, savedScrollPosition);
+            }, 0);
+        } else {
+            window.scrollTo(0, 0);
+        }
     }
 
     function performSearch(query) {
