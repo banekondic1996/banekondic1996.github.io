@@ -2,6 +2,20 @@
 const BLOG_POSTS = {
   "posts": [
     {
+      "id": "1771576303144",
+      "slug": "google-chromium-and-90-day-history",
+      "title": "Google Chromium and 90 day history",
+      "author": "Bane Kondic",
+      "date": "2026-02-20",
+      "categories": [
+        "Technology",
+        "Computers"
+      ],
+      "excerpt": "Overtime it seems Google Search is getting worse, from image search to search\nresults,which is why i use Yandex in some cases. \nNow you would expect m...",
+      "thumbnail": "",
+      "encrypted": false
+    },
+    {
       "id": "1771536488814",
       "slug": "meme-s-test-page",
       "title": "Meme's test page",
