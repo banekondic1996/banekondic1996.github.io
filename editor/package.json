@@ -11,7 +11,7 @@
     "min_height": 600,
     "icon": "icon.png"
   },
-  "chromium-args": "--mixed-context",
+  "chromium-args": "--mixed-context --enable-spell-checking",
   "dependencies": {
     "localStorage": "^1.0.4",
     "nw": "^0.107.0"

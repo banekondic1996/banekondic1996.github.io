@@ -19,8 +19,9 @@ class StorageManager {
         return { 
             blogDirectory: '',
             siteUrl: '',
-            siteTitle: 'Bane Kondic - Blog',
-            siteDescription: ''
+            siteTitle: 'My Blog',
+            siteDescription: '',
+            spellCheckLanguage: 'en_US'
         };
     }
 
@@ -270,6 +271,28 @@ class StorageManager {
         } catch (error) {
             console.error('Error saving image:', error);
             throw error;
+        }
+    }
+
+    deletePostFile(slug) {
+        try {
+            if (!this.settings.blogDirectory) {
+                return false;
+            }
+
+            const postsDir = this.path.join(this.settings.blogDirectory, 'data', 'posts');
+            const contentPath = this.path.join(postsDir, `${slug}.js`);
+            
+            if (this.fs.existsSync(contentPath)) {
+                this.fs.unlinkSync(contentPath);
+                console.log(`Deleted post file: ${slug}.js`);
+                return true;
+            }
+            
+            return false;
+        } catch (error) {
+            console.error(`Error deleting post file ${slug}:`, error);
+            return false;
         }
     }
 

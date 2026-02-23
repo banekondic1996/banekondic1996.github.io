@@ -1,4 +1,3 @@
-
 // Content manager for posts and pages
 class ContentManager {
     constructor() {
@@ -58,12 +57,13 @@ class ContentManager {
     deletePost(id) {
         const index = this.posts.findIndex(p => p.id === id);
         if (index !== -1) {
+            const slug = this.posts[index].slug;
             this.posts.splice(index, 1);
             if (this.currentItem && this.currentItem.id === id) {
                 this.currentItem = null;
                 this.currentType = null;
             }
-            return true;
+            return slug; // Return slug so file can be deleted
         }
         return false;
     }

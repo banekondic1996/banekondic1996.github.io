@@ -102,6 +102,12 @@
                         <button type="button" id="insertPreBtn" class="toolbar-btn">&lt;pre&gt;</button>
                         <button type="button" id="insertEmbedBtn" class="toolbar-btn">Embed</button>
                     </div>
+                    <div class="toolbar-group search-toolbar-group">
+                        <input type="text" id="editorSearchInput" class="editor-search-input" placeholder="Search...">
+                        <button type="button" id="searchPrevBtn" class="toolbar-btn" title="Previous">↑</button>
+                        <button type="button" id="searchNextBtn" class="toolbar-btn" title="Next">↓</button>
+                        <button type="button" id="clearSearchBtn" class="toolbar-btn" title="Clear">✕</button>
+                    </div>
                     <div class="toolbar-group">
                         <button type="button" id="previewBtn" class="toolbar-btn">👁 Preview</button>
                         <button type="button" id="previewBlogBtn" class="toolbar-btn">🌐 Preview Blog</button>
@@ -117,6 +123,7 @@
                     <input type="text" id="contentTitle" placeholder="Enter title..." class="title-input">
                     <div id="visualEditor" class="visual-editor" contenteditable="true"></div>
                     <textarea id="codeEditor" class="code-editor" style="display: none;"></textarea>
+                    <div id="spellSuggestions" class="spell-suggestions"></div>
                 </div>
             </div>
         </main>
@@ -206,6 +213,21 @@
                     <label>Site Description:</label>
                     <textarea id="siteDescription" class="form-input" rows="3" placeholder="A blog about..." style="resize: vertical;"></textarea>
                 </div>
+                <div class="form-row" style="display: none;">
+                    <label>Spell Check Language:</label>
+                    <select id="spellCheckLanguage" class="form-input">
+                        <option value="en_US">English (US)</option>
+                        <option value="en_GB">English (UK)</option>
+                        <option value="sr_RS">Serbian (Cyrillic)</option>
+                        <option value="sr_Latn">Serbian (Latin)</option>
+                        <option value="ru_RU">Russian</option>
+                        <option value="es_ES">Spanish</option>
+                        <option value="fr_FR">French</option>
+                        <option value="de_DE">German</option>
+                        <option value="it_IT">Italian</option>
+                        <option value="pt_PT">Portuguese</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-buttons">
                 <button id="saveSettingsBtn" class="btn-primary">Save</button>
@@ -232,6 +254,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.11/beautify-html.min.js"></script>
     <script src="js/crypto.js"></script>
     <script src="js/storage.js"></script>

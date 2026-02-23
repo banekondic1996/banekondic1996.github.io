@@ -10,6 +10,12 @@ class EditorApp {
         this.checkSettings();
         this.renderLists();
         wysiwygEditor.init();
+        
+        // Initialize spell check
+        // const settings = storageManager.getSettings();
+        // if (window.spellCheckManager) {
+        //     spellCheckManager.init(settings.spellCheckLanguage || 'en_US');
+        // }
     }
 
     checkSettings() {
@@ -343,6 +349,8 @@ class EditorApp {
                 this.showNotification('Post saved successfully', 'success');
                 this.hideSaveModal();
                 this.renderPostsList();
+                // Auto-generate RSS and sitemap
+                this.autoGenerateFeeds();
             } else {
                 this.showNotification('Failed to save post', 'error');
             }
@@ -383,8 +391,16 @@ class EditorApp {
         let deleted = false;
         
         if (currentType === 'post') {
-            deleted = contentManager.deletePost(currentItem.id);
-            if (deleted) contentManager.savePosts();
+            // Delete returns slug if successful
+            const slug = contentManager.deletePost(currentItem.id);
+            if (slug) {
+                deleted = true;
+                storageManager.deletePostFile(slug);
+                contentManager.savePosts();
+                
+                // Auto-generate RSS and sitemap after delete
+                this.autoGenerateFeeds();
+            }
         } else {
             deleted = contentManager.deletePage(currentItem.id);
             if (deleted) contentManager.savePages();
@@ -435,6 +451,7 @@ class EditorApp {
         document.getElementById('siteUrl').value = settings.siteUrl || '';
         document.getElementById('siteTitle').value = settings.siteTitle || 'My Blog';
         document.getElementById('siteDescription').value = settings.siteDescription || '';
+        document.getElementById('spellCheckLanguage').value = settings.spellCheckLanguage || 'en_US';
         document.getElementById('settingsModal').classList.add('active');
     }
 
@@ -452,10 +469,15 @@ class EditorApp {
             blogDirectory, 
             siteUrl, 
             siteTitle, 
-            siteDescription 
+            siteDescription,
+            spellCheckLanguage
         });
         
         if (saved) {
+            // Update spell check language
+            // if (window.spellCheckManager) {
+            //     spellCheckManager.setLanguage(spellCheckLanguage);
+            // }
             this.showNotification('Settings saved', 'success');
             this.hideSettings();
             contentManager.init();
@@ -533,6 +555,25 @@ class EditorApp {
             this.showNotification('Sitemap generated successfully! (sitemap.xml)', 'success');
         } else {
             this.showNotification('Failed to generate sitemap', 'error');
+        }
+    }
+
+    autoGenerateFeeds() {
+        const settings = storageManager.getSettings();
+        
+        // Only auto-generate if site URL is set
+        if (settings.siteUrl) {
+            const posts = contentManager.getPosts();
+            const pages = contentManager.getPages();
+            
+            storageManager.generateRssFeed(
+                posts,
+                settings.siteUrl,
+                settings.siteTitle || 'My Blog',
+                settings.siteDescription || ''
+            );
+            
+            storageManager.generateSitemap(posts, pages, settings.siteUrl);
         }
     }
 
