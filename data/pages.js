@@ -28,8 +28,7 @@ const BLOG_PAGES = {
       "id": "1771236455469",
       "slug": "About",
       "title": "About",
-      "content": "This blog is created to serve static pages and to be edited using custom offline editor.<div>Blog is used to save useful information for personal use and provide some tips, opinions.</div><div>Only pure vanilla javascript is used.</div><div><br><div><div><br></div></div></div>"
+      "content": "This blog is created to serve static pages and to be edited using custom offline\neditor.<div>Blog is used to save useful information for personal use and provide\n  some tips, opinions.</div>\n<div>Only pure vanilla Javascript is used.</div>\n<div><br></div>\n<div>Created by Bane Kondic&nbsp;</div>\n<div>Github profile:&nbsp;<a href=\"https://github.com/banekondic1996/\">Link</a>\n</div>"
     }
   ]
 };
-
