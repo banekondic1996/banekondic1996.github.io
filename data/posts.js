@@ -92,7 +92,7 @@ const BLOG_POSTS = {
       "id": "1771254520961",
       "slug": "keyboard-that-i-want-but-it-doesn-t-exist",
       "title": "Keyboard that I want, but it doesn't exist",
-      "author": "Bane Kondic",
+      "author": "",
       "date": "2026-02-16",
       "categories": [
         "Technology",
@@ -180,7 +180,7 @@ const BLOG_POSTS = {
       "id": "1771251097228",
       "slug": "secret-post-password-is-not-123",
       "title": "Secret post (password is not 123)",
-      "author": "Bane Kondic",
+      "author": "",
       "date": "2026-02-16",
       "categories": [
         "Secret"
