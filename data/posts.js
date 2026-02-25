@@ -92,7 +92,7 @@ const BLOG_POSTS = {
       "id": "1771254520961",
       "slug": "keyboard-that-i-want-but-it-doesn-t-exist",
       "title": "Keyboard that I want, but it doesn't exist",
-      "author": "",
+      "author": "Bane Kondic",
       "date": "2026-02-16",
       "categories": [
         "Technology",
@@ -138,7 +138,7 @@ const BLOG_POSTS = {
       "id": "1771253593825",
       "slug": "teorije-za-ai-mogu-e-i-ne-potvr-ene-stari-post",
       "title": "Teorije za AI (moguće i ne potvrđene) (stari post)",
-      "author": "",
+      "author": "Bane Kondic",
       "date": "2026-02-16",
       "categories": [
         "AI",
@@ -180,7 +180,7 @@ const BLOG_POSTS = {
       "id": "1771251097228",
       "slug": "secret-post-password-is-not-123",
       "title": "Secret post (password is not 123)",
-      "author": "",
+      "author": "Bane Kondic",
       "date": "2026-02-16",
       "categories": [
         "Secret"
@@ -193,7 +193,7 @@ const BLOG_POSTS = {
       "id": "1771244669653",
       "slug": "installing-kde-on-ubuntu-and-making-it-faster-app-recommendations",
       "title": "Installing KDE on Ubuntu and making it faster, + app recommendations",
-      "author": "",
+      "author": "Bane Kondic",
       "date": "2026-02-16",
       "categories": [
         "Computers",
