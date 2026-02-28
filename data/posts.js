@@ -30,6 +30,19 @@ const BLOG_POSTS = {
       "encrypted": false
     },
     {
+      "id": "1771416753021",
+      "slug": "secret-post-password-is-jmbg-of-my-crush",
+      "title": "Secret post (password is JMBG of my crush)",
+      "author": "",
+      "date": "2026-02-18",
+      "categories": [
+        "Life"
+      ],
+      "excerpt": "",
+      "thumbnail": "",
+      "encrypted": true
+    },
+    {
       "id": "1771255656285",
       "slug": "thoughts-about-windows-and-microsoft-password-is-123",
       "title": "Thoughts about Windows and Microsoft (password is 123)",
