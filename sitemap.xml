@@ -1,89 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://elveapps.me/blog/</loc>
+    <loc>https://banekondic1996.github.io/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#thoughts</loc>
+    <loc>https://banekondic1996.github.io/#thoughts</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#page/contact</loc>
+    <loc>https://banekondic1996.github.io/#page/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#page/About</loc>
+    <loc>https://banekondic1996.github.io/#page/About</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/google-chromium-and-90-day-history</loc>
+    <loc>https://banekondic1996.github.io/#post/google-chromium-and-90-day-history</loc>
     <lastmod>2026-02-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/meme-s-test-page</loc>
+    <loc>https://banekondic1996.github.io/#post/meme-s-test-page</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/future-of-pc-s-and-thoughts-reading-tech</loc>
+    <loc>https://banekondic1996.github.io/#post/future-of-pc-s-and-thoughts-reading-tech</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/thought-about-aliens-and-tech</loc>
+    <loc>https://banekondic1996.github.io/#post/thought-about-aliens-and-tech</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/spy-tech-i-want</loc>
+    <loc>https://banekondic1996.github.io/#post/spy-tech-i-want</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/keyboard-that-i-want-but-it-doesn-t-exist</loc>
+    <loc>https://banekondic1996.github.io/#post/keyboard-that-i-want-but-it-doesn-t-exist</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/teorije-za-ai-mogu-e-i-ne-potvr-ene-stari-post</loc>
+    <loc>https://banekondic1996.github.io/#post/teorije-za-ai-mogu-e-i-ne-potvr-ene-stari-post</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/maya-attaching-clothes-to-character-for-slow-pcs</loc>
+    <loc>https://banekondic1996.github.io/#post/maya-attaching-clothes-to-character-for-slow-pcs</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/no-pain-women</loc>
+    <loc>https://banekondic1996.github.io/#post/no-pain-women</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://elveapps.me/blog/#post/installing-kde-on-ubuntu-and-making-it-faster-app-recommendations</loc>
+    <loc>https://banekondic1996.github.io/#post/installing-kde-on-ubuntu-and-making-it-faster-app-recommendations</loc>
     <lastmod>2026-02-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://elveapps.me/ExtendedHistory</loc>
-    <lastmod>2026-03-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1</priority>
   </url>
 </urlset>
