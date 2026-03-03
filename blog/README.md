@@ -1,4 +1,3 @@
-# banekondic1996.github.io
 **To do:**
 <pre>
 -Make post sorting possible
