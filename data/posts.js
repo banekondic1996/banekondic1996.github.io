@@ -2,6 +2,17 @@
 const BLOG_POSTS = {
   "posts": [
     {
+      "id": "1774440179871",
+      "slug": "copper-roofs",
+      "title": "Copper roofs",
+      "author": "Bane Kondic",
+      "date": "2026-03-25",
+      "categories": [],
+      "excerpt": "It's so funny to me, that only now I'm finding out that copper roofs are longest\nlasting roofs. Most roofs are design to last few decades,simple roof...",
+      "thumbnail": "",
+      "encrypted": false
+    },
+    {
       "id": "1774438170997",
       "slug": "best-sound-insulation-object",
       "title": "Best sound insulation object",
