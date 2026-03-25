@@ -12,7 +12,7 @@
 </head>
 <!-- Analytics -->
 <!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="c66fa6e1-92a4-4bfe-9c52-42a66c794ab1"></script> -->
-<script defer src="https://analytics-proxy-odgk5dpmk-banekondic19961s-projects.vercel.app/stats/script.js" data-website-id="c66fa6e1-92a4-4bfe-9c52-42a66c794ab1"></script>
+<!-- <script defer src="https://analytics-proxy-odgk5dpmk-banekondic19961s-projects.vercel.app/stats/script.js" data-website-id="c66fa6e1-92a4-4bfe-9c52-42a66c794ab1"></script> -->
 <body>
     <nav class="navbar">
         <div class="nav-container">
@@ -167,7 +167,7 @@
             
             <p>You agree that we can use <strong>Umami Analytics</strong> (via a privacy-friendly proxy) which we use to understand how many people visit the blog and from which countries. 
             We do not own or control Umami, and we have no access to your IP address or any personally identifiable information. 
-            The analytics are fully anonymized and used only for basic visitor statistics.</p>
+            The analytics are fully anonymized and used only for basic visitor statistics. You also accept to save this choice in your browser local storage</p>
             
             <p>In addition, by entering this blog you solemnly swear that if the owner of this website ever finds you in real life and politely asks you to take him or go with him to McDonald's, you will do so and pay for his meal.</p>
             
@@ -187,23 +187,25 @@
     <script src="js/favicon.js" defer></script>
     <script>
 // Analytics script (the one you already have commented out)
-const analyticsScript = `
-    <script defer src="https://analytics-proxy-odgk5dpmk-banekondic19961s-projects.vercel.app/stats/script.js" 
-            data-website-id="c66fa6e1-92a4-4bfe-9c52-42a66c794ab1"><\/script>
-`;
+function injectAnal(){
+    const script = document.createElement('script');
+    script.defer = true;
+    script.src = "https://analytics-proxy-odgk5dpmk-banekondic19961s-projects.vercel.app/stats/script.js";
+    script.setAttribute("data-website-id", "c66fa6e1-92a4-4bfe-9c52-42a66c794ab1");
+    document.body.appendChild(script);
+}
 
 // Show consent modal on load (unless already accepted)
 if (!localStorage.getItem('blogConsentAccepted')) {
     document.getElementById('consentModal').style.display = 'flex';
 }
-
+if (localStorage.getItem('blogConsentAccepted')) {
+    injectAnal();
+}
 // Enter button
 document.getElementById('enterBlogBtn').addEventListener('click', () => {
-    // Inject analytics
-    const div = document.createElement('div');
-    div.innerHTML = analyticsScript;
-    document.body.appendChild(div.firstChild);
-
+    //Inject analytics
+    injectAnal()
     // Mark as accepted
     localStorage.setItem('blogConsentAccepted', 'true');
 
@@ -215,6 +217,9 @@ document.getElementById('enterBlogBtn').addEventListener('click', () => {
     }, 400);
     });
 
+    document.getElementById('floatingPrivacyBtn').addEventListener('click', () => {
+        document.getElementById('privacyModal').style.display = 'flex';
+    });
     // Close privacy modal
     document.getElementById('closePrivacyBtn').addEventListener('click', () => {
         document.getElementById('privacyModal').style.display = 'none';
