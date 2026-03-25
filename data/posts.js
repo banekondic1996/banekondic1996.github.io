@@ -2,6 +2,20 @@
 const BLOG_POSTS = {
   "posts": [
     {
+      "id": "1774438170997",
+      "slug": "best-sound-insulation-object",
+      "title": "Best sound insulation object",
+      "author": "Bane Kondic",
+      "date": "2026-03-25",
+      "categories": [
+        "Sound",
+        "DIY"
+      ],
+      "excerpt": "As someone who can sleep even sitting on chair and with tanks passing by, I love\nalso being in silence.\nAs I tried few materials like synthetic white...",
+      "thumbnail": "",
+      "encrypted": false
+    },
+    {
       "id": "1771576303144",
       "slug": "google-chromium-and-90-day-history",
       "title": "Google Chromium and 90 day history",
