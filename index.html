@@ -141,6 +141,42 @@
             <p id="decryptError" class="error-message"></p>
         </div>
     </div>
+    <!-- Consent Modal (full overlay) -->
+<div id="consentModal" class="consent-modal">
+    <div class="consent-modal-content">
+        <h2 style=" margin-bottom: 20px;">Welcome to My Blog</h2>
+        <button id="enterBlogBtn" class="enter-btn">Enter the blog</button>
+        <a  class="enter-btn" style="text-decoration: none;" href="https://www.google.com/search?q=cat+videos">Leave the blog</a>
+        <p id="acceptNotice" class="accept-notice">
+            By pressing this button you accept the Privacy Policy
+        </p>
+    </div>
+<button id="floatingPrivacyBtn" class="floating-privacy-btn" aria-label="Privacy Policy">
+    Privacy Policy
+</button>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div id="privacyModal" class="privacy-modal">
+    <div class="privacy-modal-content">
+        <button id="closePrivacyBtn" class="close-privacy-btn" aria-label="Close">✕</button>
+        <h2>Privacy Policy</h2>
+        
+        <div class="privacy-text">
+            <p>By pressing the <strong>"Enter the blog"</strong> button, you agree to the following policy:</p>
+            
+            <p>You agree that we can use <strong>Umami Analytics</strong> (via a privacy-friendly proxy) which we use to understand how many people visit the blog and from which countries. 
+            We do not own or control Umami, and we have no access to your IP address or any personally identifiable information. 
+            The analytics are fully anonymized and used only for basic visitor statistics.</p>
+            
+            <p>In addition, by entering this blog you solemnly swear that if the owner of this website ever finds you in real life and politely asks you to take him or go with him to McDonald's, you will do so and pay for his meal.</p>
+            
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">
+                Last updated: March 2026 
+            </p>
+        </div>
+    </div>
+</div>
 
     <script src="js/crypto.js" defer></script>
     <script src="data/posts.js" defer></script>
@@ -149,5 +185,52 @@
     <script src="js/render.js" defer></script>
     <script src="js/app.js" defer></script>
     <script src="js/favicon.js" defer></script>
+    <script>
+// Analytics script (the one you already have commented out)
+const analyticsScript = `
+    <script defer src="https://analytics-proxy-odgk5dpmk-banekondic19961s-projects.vercel.app/stats/script.js" 
+            data-website-id="c66fa6e1-92a4-4bfe-9c52-42a66c794ab1"><\/script>
+`;
+
+// Show consent modal on load (unless already accepted)
+if (!localStorage.getItem('blogConsentAccepted')) {
+    document.getElementById('consentModal').style.display = 'flex';
+}
+
+// Enter button
+document.getElementById('enterBlogBtn').addEventListener('click', () => {
+    // Inject analytics
+    const div = document.createElement('div');
+    div.innerHTML = analyticsScript;
+    document.body.appendChild(div.firstChild);
+
+    // Mark as accepted
+    localStorage.setItem('blogConsentAccepted', 'true');
+
+    // Hide consent modal with fade
+    const modal = document.getElementById('consentModal');
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 400);
+    });
+
+    // Floating privacy button
+    document.getElementById('floatingPrivacyBtn').addEventListener('click', () => {
+        document.getElementById('privacyModal').style.display = 'flex';
+    });
+
+    // Close privacy modal
+    document.getElementById('closePrivacyBtn').addEventListener('click', () => {
+        document.getElementById('privacyModal').style.display = 'none';
+    });
+
+    // Optional: click outside privacy modal to close
+    document.getElementById('privacyModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+        }
+    });
+</script>
 </body>
 </html>
